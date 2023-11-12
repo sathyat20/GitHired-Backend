@@ -27,7 +27,7 @@ const applicationsRouter = new ApplicationsRouter(applicationsController)
 const app = express();
 const corsOptions = {
   origin: 'localhost:3000',
-  oprtionsSuccessStatus: 200
+  optionsSuccessStatus: 200
 }
 
 app.use(cors(corsOptions));
