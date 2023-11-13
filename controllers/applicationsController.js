@@ -1,8 +1,11 @@
+// const { application } = require('express');
 const BaseController = require('./baseController')
 
 class ApplicationsController extends BaseController {
-  constructor(model) {
-    super(model);
+  constructor(applicationsModel, statusModel, remindersModel) {
+    super(applicationsModel);
+    this.statusModel = statusModel;
+    this.remindersModel = remindersModel;
   }
 
   test = (req, res) => {
