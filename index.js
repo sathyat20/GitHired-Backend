@@ -14,11 +14,11 @@ const ApplicationsController = require("./controllers/applicationsController");
 
 // import db
 const db = require('./db/models')
-const { users, applications } = db
+const { users, applications, applicationsStatus, applicationsReminders } = db
 
 // Initializing Controllers
 const userController = new UserController(users)
-const applicationsController = new ApplicationsController(applications);
+const applicationsController = new ApplicationsController(applications, applicationsStatus, applicationsReminders);
  
 // Initializing Routers
 const userRouter = new UserRouter(userController)
