@@ -16,6 +16,10 @@ class UserRouter{
       this.userController.getUserApplications
     ); // route for getting a user's applications
     router.post("/newUser", this.userController.createOne);
+    router.get(
+      "/:userId/applications/status/:statusId",
+      this.userController.getApplicationsByStatus
+    );
     return router;
   }
 }
