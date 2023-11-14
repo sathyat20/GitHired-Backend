@@ -109,6 +109,31 @@ class UserController extends BaseController {
         success: true,
         application: foundApplication,
       });
+      
+  // To retrieve job applications for each user based on status_id
+
+  getApplicationsByStatus = async (req, res) => {
+    const { userId, statusId } = req.params;
+
+    try {
+      const userWithFilteredApplications = await this.model.findOne({
+        where: { id : userId },
+        include: [
+          {
+            model: this.applicationsModel,
+            where: {statusId: statusId},
+            include: [this.applicationStatusModel]
+          }
+        ],
+      });
+
+      if (!userWithFilteredApplications || !userWithFilteredApplications.applications.length) {
+        return res
+          .status(404)
+          .json({ success: false, msg: "No applications found for that status for the user or user doesnt exist" });
+      }
+
+      return res.json({ success: true, applications: userWithFilteredApplications.applications });
     } catch (err) {
       return res.status(500).json({ success: false, msg: err.message });
     }

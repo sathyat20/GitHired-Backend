@@ -20,6 +20,10 @@ class UserRouter {
       this.userController.getOneUserApplication
     ); // route for getting a single application for a user
     router.post("/newUser", this.userController.createOne);
+    router.get(
+      "/:userId/applications/status/:statusId",
+      this.userController.getApplicationsByStatus
+    );
     return router;
   };
 }
