@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
       //create associations in here
-      ApplicationsStatus.hasMany(models.applications)
+      ApplicationsStatus.hasMany(models.application, {foreignKey: "statusId"})
     }
   }
 
@@ -16,13 +16,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         unique: true,
         allowNull: false,
-      }
+      },
     },
     {
       sequelize,
-      modelName: "applicationsStatus",
-      timestamps: true,
+      modelName: "applicationStatus",
+      timestamps: false,
       underscored: true,
+      tableName: "applications_status"
     }
   );
   return ApplicationsStatus;

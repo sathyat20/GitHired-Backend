@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
       //create associations in here
-      Users.hasMany(models.applications)
+      Users.hasMany(models.application)
     }
   }
 
@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
   },
   {
     sequelize,
-    modelName: 'users',
+    modelName: 'user',
     timestamps: true,
     underscored: true
   });

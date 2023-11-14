@@ -3,16 +3,20 @@ const router = express.Router()
 
 class UserRouter{
   constructor(userController){
-    this.controller = userController
+    this.userController = userController;
   }
 
   routes=() => {
-    router.get('/', this.controller.test)
-    router.get('/base', this.controller.baseMethod)
-    router.get('/all', this.controller.getAll)
-    router.get('/:id', this.controller.getOne)
-    router.post('/newUser', this.controller.createOne)
-    return router
+    router.get("/", this.userController.test);
+    router.get("/base", this.userController.baseMethod);
+    router.get("/all", this.userController.getAll);
+    router.get("/:id", this.userController.getOne);
+    router.get(
+      "/:userId/applications",
+      this.userController.getUserApplications
+    ); // route for getting a user's applications
+    router.post("/newUser", this.userController.createOne);
+    return router;
   }
 }
 

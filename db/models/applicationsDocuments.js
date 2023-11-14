@@ -1,16 +1,16 @@
 const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
-  class ApplicationsReminders extends Model {
+  class ApplicationsDocuments extends Model {
     //create our associations
 
     static associate(models) {
       //create associations in here
-      ApplicationsReminders.belongsTo(models.application)
+      ApplicationsDocuments.belongsTo(models.application);
     }
   }
 
-  ApplicationsReminders.init(
+  ApplicationsDocuments.init(
     {
       applicationsId: {
         type: DataTypes.INTEGER,
@@ -20,21 +20,21 @@ module.exports = (sequelize, DataTypes) => {
           key: "id",
         },
       },
-      reminderDate: {
-        type: DataTypes.DATEONLY,
-        allowNull: false,
-      },
-      reminderNote: {
+      documentType: {
         type: DataTypes.STRING,
         allowNull: true,
+      },
+      documentUrl: {
+        type: DataTypes.STRING,
+        allowNull: false,
       },
     },
     {
       sequelize,
-      modelName: "applicationReminder",
+      modelName: "applicationDocument",
       timestamps: true,
       underscored: true,
     }
   );
-  return ApplicationsReminders;
+  return ApplicationsDocuments;
 };

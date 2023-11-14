@@ -1,8 +1,10 @@
 const BaseController = require("./baseController");
 
 class UserController extends BaseController {
-  constructor(model) {
-    super(model);
+  constructor(userModel, applicationsModel, applicationStatusModel) {
+    super(userModel);
+    this.applicationsModel = applicationsModel
+    this.applicationStatusModel = applicationStatusModel
   }
 
   test = (req, res) => {
@@ -34,6 +36,25 @@ class UserController extends BaseController {
       return res.status(400).json({success: false, msg: err})
     }
   };
+
+  getUserApplications = async (req, res) => {
+    const {userId} = req.params;
+
+    try {
+      const userWithApplications = await this.model.findOne({
+        where: {id: userId},
+        include: [{ model: this.applicationsModel, include: this.applicationStatusModel }]
+      });
+
+      if (!userWithApplications) {
+        return res.status(404).json({ success: false, msg: "User not found"});
+      }
+
+      return res.json({ success: true, applications: userWithApplications.applications })
+    } catch (err) {
+      return res.status(500).json({ success: false, msg: err.message })
+    }
+  }
 }
 
 module.exports = UserController;
