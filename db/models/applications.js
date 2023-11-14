@@ -6,11 +6,13 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
       //create associations in here
-      Applications.belongsTo(models.user)
-      Applications.belongsTo(models.applicationStatus, {foreignKey: "statusId"})
-      Applications.hasMany(models.applicationReminder)
-      Applications.hasMany(models.applicationDocument)
-      Applications.hasMany(models.applicationInterviewPrep)
+      Applications.belongsTo(models.user, { foreignKey: "user_id" });
+      Applications.belongsTo(models.applicationStatus, {
+        foreignKey: "statusId",
+      });
+      Applications.hasMany(models.applicationReminder);
+      Applications.hasMany(models.applicationDocument);
+      Applications.hasMany(models.applicationInterviewPrep);
     }
   }
 
@@ -48,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
           key: "id",
         },
       },
-      isBookmarked: {
+      is_bookmarked: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
       },

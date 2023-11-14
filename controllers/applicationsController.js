@@ -1,5 +1,5 @@
 // const { application } = require('express');
-const BaseController = require('./baseController')
+const BaseController = require("./baseController");
 
 class ApplicationsController extends BaseController {
   constructor(applicationsModel, statusModel, remindersModel) {
@@ -14,23 +14,19 @@ class ApplicationsController extends BaseController {
 
   // To create a new application
   createOne = async (req, res) => {
-    const {
-      userId,
-      jobPosition,
-      color,
-      companyName,
-      location,
-      statusId,
-      isBookmarked,
-      jobDescription,
-      applicationDate,
-    } = req.body;
+    const { userId, jobPosition, color, companyName, location, statusId, is_bookmarked, jobDescription, applicationDate } =
+      req.body;
     //input validation
 
-    if (!userId || !statusId || !jobPosition || !isBookmarked) {
+    if (
+      !userId ||
+      !statusId ||
+      !jobPosition ||
+      !is_bookmarked
+    ) {
       return res
         .status(400)
-        .json({ sucess: false, msg: "Please ensure all inputs are in" });
+        .json({ success: false, msg: "Please ensure all inputs are in" });
     }
     try {
       console.log("body:", req.body);
@@ -41,7 +37,7 @@ class ApplicationsController extends BaseController {
         companyName,
         location,
         statusId,
-        isBookmarked,
+        is_bookmarked,
         jobDescription,
         applicationDate,
       });

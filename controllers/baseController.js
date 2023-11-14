@@ -14,14 +14,13 @@ class BaseController {
   };
 
   getOne = async (req, res) => {
-    const {id} = req.params
+    const { id } = req.params;
     const output = await this.model.findByPk(id);
-    if(!output) {
-      return res.status(404).json({success: false, msg: "User not found."})
+    if (!output) {
+      return res.status(404).json({ success: false, msg: "User not found." });
     }
     return res.json({ success: true, data: output });
   };
-
 }
 
-module.exports = BaseController
+module.exports = BaseController;
