@@ -6,9 +6,10 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
       //create associations in here
-      Applications.belongsTo(models.users)
-      Applications.belongsTo(models.applicationsStatus)
-      Applications.hasMany(models.applicationsReminders)
+      Applications.belongsTo(models.user)
+      Applications.belongsTo(models.applicationStatus, {foreignKey: "statusId"})
+      Applications.hasMany(models.applicationReminder)
+      Applications.hasMany(models.applicationDocument)
     }
   }
 
@@ -18,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         references: {
-          model: "users",
+          model: "user",
           key: "id",
         },
       },
@@ -42,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         references: {
-          model: "applications_status",
+          model: "applicationStatus",
           key: "id",
         },
       },
@@ -61,7 +62,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "applications",
+      modelName: "application",
       timestamps: true,
       underscored: true,
     }
