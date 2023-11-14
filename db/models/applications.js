@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       });
       Applications.hasMany(models.applicationReminder);
       Applications.hasMany(models.applicationDocument);
+      Applications.hasMany(models.applicationInterviewPrep);
     }
   }
 
