@@ -31,6 +31,7 @@ class UserController extends BaseController {
       password,
       profilePic,
     });
+    
     return res.json({ success: true, user: newUser });}
     catch (err) {
       return res.status(400).json({success: false, msg: err})

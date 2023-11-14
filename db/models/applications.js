@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       Applications.belongsTo(models.applicationStatus, {foreignKey: "statusId"})
       Applications.hasMany(models.applicationReminder)
       Applications.hasMany(models.applicationDocument)
+      Applications.hasMany(models.applicationInterviewPrep)
     }
   }
 
