@@ -10,7 +10,6 @@ class UserRouter {
     router.get("/", this.userController.test);
     router.get("/base", this.userController.baseMethod);
     router.get("/all", this.userController.getAll);
-    router.get("/upload-image", this.userController.uploadProfileImage);
     router.get(
       "/:userId/applications",
       this.userController.getUserApplications
