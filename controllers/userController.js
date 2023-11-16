@@ -1,6 +1,4 @@
 const BaseController = require("./baseController");
-const { storage } = require("../firebase/firebase");
-const { uploadBytes, ref, getDownloadURL } = require("firebase/storage");
 
 class UserController extends BaseController {
   constructor(userModel, applicationsModel, applicationStatusModel) {
@@ -39,9 +37,6 @@ class UserController extends BaseController {
   };
 
   uploadProfileImage = (req, res) => {
-    const image = req;
-    console.log("image", image);
-
     return res.send("Upload Image");
   };
 
