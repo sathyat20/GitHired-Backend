@@ -36,10 +36,6 @@ class UserController extends BaseController {
     }
   };
 
-  uploadProfileImage = (req, res) => {
-    return res.send("Upload Image");
-  };
-
   getUserApplications = async (req, res) => {
     const { userId } = req.params;
 
