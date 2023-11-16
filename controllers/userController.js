@@ -8,26 +8,18 @@ class UserController extends BaseController {
   }
 
   test = (req, res) => {
-    // Things to do: Connect to db, third party API calls, calculations, etc
     return res.send("I am in my User Controller");
   };
 
+  // Create new user via the route /user/newUser
   createOne = async (req, res) => {
-    const { email, firstName, lastName, username, password, profilePic } =
-      req.body;
+    const { email, firstName, lastName, profilePic } = req.body;
     //input validation
 
-    if (
-      !email ||
-      !firstName ||
-      !lastName ||
-      !username ||
-      !password ||
-      !profilePic
-    ) {
+    if (!email || !firstName || !lastName) {
       return res
         .status(400)
-        .json({ sucess: false, msg: "Please ensure all inputs are in" });
+        .json({ success: false, msg: "Please ensure all inputs are in" });
     }
     try {
       console.log("body:", req.body);
@@ -35,8 +27,6 @@ class UserController extends BaseController {
         email,
         firstName,
         lastName,
-        username,
-        password,
         profilePic,
       });
 
@@ -109,7 +99,10 @@ class UserController extends BaseController {
         success: true,
         application: foundApplication,
       });
-      
+    } catch (err) {
+      return res.status(500).json({ success: false, msg: err.message });
+    }
+  };
   // To retrieve job applications for each user based on status_id
 
   getApplicationsByStatus = async (req, res) => {
@@ -117,23 +110,30 @@ class UserController extends BaseController {
 
     try {
       const userWithFilteredApplications = await this.model.findOne({
-        where: { id : userId },
+        where: { id: userId },
         include: [
           {
             model: this.applicationsModel,
-            where: {statusId: statusId},
-            include: [this.applicationStatusModel]
-          }
+            where: { statusId: statusId },
+            include: [this.applicationStatusModel],
+          },
         ],
       });
 
-      if (!userWithFilteredApplications || !userWithFilteredApplications.applications.length) {
-        return res
-          .status(404)
-          .json({ success: false, msg: "No applications found for that status for the user or user doesnt exist" });
+      if (
+        !userWithFilteredApplications ||
+        !userWithFilteredApplications.applications.length
+      ) {
+        return res.status(404).json({
+          success: false,
+          msg: "No applications found for that status for the user or user doesnt exist",
+        });
       }
 
-      return res.json({ success: true, applications: userWithFilteredApplications.applications });
+      return res.json({
+        success: true,
+        applications: userWithFilteredApplications.applications,
+      });
     } catch (err) {
       return res.status(500).json({ success: false, msg: err.message });
     }

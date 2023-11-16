@@ -25,7 +25,6 @@ class UserRouter {
     );
     router.get("/:id", this.userController.getOne);
 
-
     return router;
   };
 }
