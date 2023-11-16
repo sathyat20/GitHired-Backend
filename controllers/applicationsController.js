@@ -14,16 +14,20 @@ class ApplicationsController extends BaseController {
 
   // To create a new application
   createOne = async (req, res) => {
-    const { userId, jobPosition, color, companyName, location, statusId, is_bookmarked, jobDescription, applicationDate } =
-      req.body;
+    const {
+      userId,
+      jobPosition,
+      color,
+      companyName,
+      location,
+      statusId,
+      is_bookmarked,
+      jobDescription,
+      applicationDate,
+    } = req.body;
     //input validation
 
-    if (
-      !userId ||
-      !statusId ||
-      !jobPosition ||
-      !is_bookmarked
-    ) {
+    if (!userId || !statusId || !jobPosition) {
       return res
         .status(400)
         .json({ success: false, msg: "Please ensure all inputs are in" });
@@ -43,7 +47,7 @@ class ApplicationsController extends BaseController {
       });
       return res.json({ success: true, application: newApplication });
     } catch (err) {
-      return res.status(400).json({ success: false, msg: err });
+      return res.status(400).json({ success: false, msg: "This is broken" });
     }
   };
 }
