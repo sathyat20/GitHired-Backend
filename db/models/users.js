@@ -25,17 +25,17 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      username: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
       profilePic: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
+      },
+      applicationGoalCount: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+      questionsGoalCount: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
       },
     },
     {

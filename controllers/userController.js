@@ -1,4 +1,6 @@
 const BaseController = require("./baseController");
+const { storage } = require("../firebase/firebase");
+const { uploadBytes, ref, getDownloadURL } = require("firebase/storage");
 
 class UserController extends BaseController {
   constructor(userModel, applicationsModel, applicationStatusModel) {
@@ -8,23 +10,15 @@ class UserController extends BaseController {
   }
 
   test = (req, res) => {
-    // Things to do: Connect to db, third party API calls, calculations, etc
     return res.send("I am in my User Controller");
   };
 
+  // Create new user via the route /user/newUser
   createOne = async (req, res) => {
-    const { email, firstName, lastName, username, password, profilePic } =
-      req.body;
+    const { email, firstName, lastName, profilePic } = req.body;
     //input validation
 
-    if (
-      !email ||
-      !firstName ||
-      !lastName ||
-      !username ||
-      !password ||
-      !profilePic
-    ) {
+    if (!email || !firstName || !lastName) {
       return res
         .status(400)
         .json({ success: false, msg: "Please ensure all inputs are in" });
@@ -35,8 +29,6 @@ class UserController extends BaseController {
         email,
         firstName,
         lastName,
-        username,
-        password,
         profilePic,
       });
 
@@ -44,6 +36,13 @@ class UserController extends BaseController {
     } catch (err) {
       return res.status(400).json({ success: false, msg: err });
     }
+  };
+
+  uploadProfileImage = (req, res) => {
+    const image = req;
+    console.log("image", image);
+
+    return res.send("Upload Image");
   };
 
   getUserApplications = async (req, res) => {
