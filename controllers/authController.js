@@ -63,14 +63,14 @@ class AuthController extends BaseController {
 
   verifyUser = async (req, res) => {
     const token = req.query.token;
-    if (token == null) return res.sendStatus(401);
+    if (token == null) return res.sendStatus(401).send("No token submitted");
     try {
       const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
       console.log("Decoded token is:", decodedToken);
       const user = await this.model.findOne({
         where: { id: decodedToken.userId },
       });
-      res.send(`Authed as ${user.firstName}`);
+      res.send(user);
     } catch (e) {
       console.error(e);
       return res.status(401).send(e.message);
