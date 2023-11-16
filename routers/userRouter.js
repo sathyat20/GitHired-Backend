@@ -10,7 +10,6 @@ class UserRouter {
     router.get("/", this.userController.test);
     router.get("/base", this.userController.baseMethod);
     router.get("/all", this.userController.getAll);
-    router.get("/:id", this.userController.getOne);
     router.get(
       "/:userId/applications",
       this.userController.getUserApplications
@@ -24,6 +23,9 @@ class UserRouter {
       "/:userId/applications/status/:statusId",
       this.userController.getApplicationsByStatus
     );
+    router.get("/:id", this.userController.getOne);
+
+
     return router;
   };
 }
