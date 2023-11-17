@@ -15,23 +15,33 @@ class AuthController extends BaseController {
   loginUser = async (req, res) => {
     const user = await this.model.findOne({ where: { email: req.body.email } });
 
+    // New User (Sign Up) - Redirect to /onboarding after verification
     if (!user) {
       try {
-        const token = jwt.sign({ email: req.body.email }, process.env.JWT_SECRET, {
-          expiresIn: "1h",
-        });
+        const token = jwt.sign(
+          { email: req.body.email },
+          process.env.JWT_SECRET,
+          {
+            expiresIn: "24h",
+          }
+        );
         await sendSignUpEmail({ email: req.body.email, token });
       } catch (e) {
         console.error("Login error:", e);
-        return res.status(500).send("Error logging in, please try again.");
+        return res.status(500).send("Error Signing Up, please try again.");
       }
     }
 
+    // Existing User (Sign In) - Redirect to /dashboard after verification
     if (user != null) {
       try {
-        const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
-          expiresIn: "1h",
-        });
+        const token = jwt.sign(
+          { userId: user.id, email: req.body.email }, // Add userId and email to JWT body
+          process.env.JWT_SECRET,
+          {
+            expiresIn: "24h",
+          }
+        );
         await sendSignInEmail({ email: user.email, token });
       } catch (e) {
         console.error("Login error:", e);
@@ -42,17 +52,29 @@ class AuthController extends BaseController {
     res.send("Please check your email to finish logging in!");
   };
 
+  retrieveEmailFromToken = async (req, res) => {
+    const token = req.query.token;
+    if (token == null) return res.sendStatus(401).send("No token submitted");
+    try {
+      const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+      console.log("Decoded token is:", decodedToken);
+      const email = decodedToken.email;
+      res.send(email);
+    } catch (e) {
+      return res.status(400).json({ success: false, msg: "Invalid Token" });
+    }
+  };
+
   verifyUser = async (req, res) => {
     const token = req.query.token;
-    console.log(token, "hello");
-    if (token == null) return res.sendStatus(401);
+    if (token == null) return res.sendStatus(401).send("No token submitted");
     try {
       const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
       console.log("Decoded token is:", decodedToken);
       const user = await this.model.findOne({
-        where: { id: decodedToken.userId },
+        where: { email: decodedToken.email },
       });
-      res.send(`Authed as ${user.firstName}`);
+      res.send(user);
     } catch (e) {
       console.error(e);
       return res.status(401).send(e.message);

@@ -9,8 +9,9 @@ class AuthRouter {
   routes = () => {
     router.get("/", this.authController.test);
     router.post("/login", this.authController.loginUser);
+    router.get("/retrieve-email", this.authController.retrieveEmailFromToken);
     router.get("/verify", this.authController.verifyUser);
-   
+
     return router;
   };
 }
