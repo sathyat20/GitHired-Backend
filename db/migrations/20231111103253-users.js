@@ -32,7 +32,7 @@ module.exports = {
       },
       profile_pic: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       application_goal_count: {
         type: Sequelize.INTEGER,
