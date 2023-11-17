@@ -3,7 +3,7 @@ const cors = require("cors");
 
 require("dotenv").config();
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8080;
 
 // Import Routers
 const UserRouter = require("./routers/userRouter");
@@ -35,7 +35,7 @@ const authRouter = new AuthRouter(authController);
 
 const app = express();
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: "https://git-hired-app.netlify.app",
   optionsSuccessStatus: 200,
 };
 app.use(cors(corsOptions));
