@@ -22,7 +22,7 @@ class AuthController extends BaseController {
           { email: req.body.email },
           process.env.JWT_SECRET,
           {
-            expiresIn: "1h",
+            expiresIn: "24h",
           }
         );
         await sendSignUpEmail({ email: req.body.email, token });
@@ -35,9 +35,13 @@ class AuthController extends BaseController {
     // Existing User (Sign In) - Redirect to /dashboard after verification
     if (user != null) {
       try {
-        const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
-          expiresIn: "1h",
-        });
+        const token = jwt.sign(
+          { userId: user.id, email: req.body.email }, // Add userId and email to JWT body
+          process.env.JWT_SECRET,
+          {
+            expiresIn: "24h",
+          }
+        );
         await sendSignInEmail({ email: user.email, token });
       } catch (e) {
         console.error("Login error:", e);
@@ -68,7 +72,7 @@ class AuthController extends BaseController {
       const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
       console.log("Decoded token is:", decodedToken);
       const user = await this.model.findOne({
-        where: { id: decodedToken.userId },
+        where: { email: decodedToken.email },
       });
       res.send(user);
     } catch (e) {
