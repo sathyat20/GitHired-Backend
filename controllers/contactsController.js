@@ -1,94 +1,105 @@
-// const { application } = require('express');
 const BaseController = require("./baseController");
 
+const { CREATED, BAD_REQUEST } = require("../constants/statusCodes");
+
+const {
+  CONTACT_CREATED_SUCCESS,
+  MISSING_FIELDS,
+  SUBMISSION_ERROR,
+} = require("../constants/messages");
+
 class ContactsController extends BaseController {
-  constructor(contactsModel) {
-    super(contactsModel);
+  constructor(contactModel) {
+    super(contactModel);
   }
 
   test = (req, res) => {
     return res.send("I am in my Contacts Controller");
   };
 
-  // To create a new application POST /applications/create
+  // To create a new contact POST /contact/create
   createOne = async (req, res) => {
     const {
       userId,
-      jobPosition,
-      color,
+      contactName,
       companyName,
-      location,
-      statusId,
-      is_bookmarked,
-      jobDescription,
-      applicationDate,
+      jobPosition,
+      email,
+      notes,
+      phoneNumber,
+      lastContactedDate,
     } = req.body;
     //input validation
 
-    if (!userId || !statusId || !jobPosition) {
+    if (!userId || !contactName || !companyName || !jobPosition) {
       return res
-        .status(400)
-        .json({ success: false, msg: "Please ensure all inputs are in" });
+        .status(BAD_REQUEST)
+        .json({ success: false, msg: MISSING_FIELDS });
     }
     try {
       console.log("body:", req.body);
-      const newApplication = await this.model.create({
+      const newContact = await this.model.create({
         userId,
-        jobPosition,
-        color,
+        contactName,
         companyName,
-        location,
-        statusId,
-        is_bookmarked,
-        jobDescription,
-        applicationDate,
+        jobPosition,
+        email,
+        notes,
+        phoneNumber,
+        lastContactedDate,
       });
-      return res.json({ success: true, application: newApplication });
+      return res.status(CREATED).json({
+        success: true,
+        msg: CONTACT_CREATED_SUCCESS,
+        data: newContact,
+      });
     } catch (err) {
-      return res.status(400).json({ success: false, msg: "This is broken" });
+      return res
+        .status(BAD_REQUEST)
+        .json({ success: false, msg: SUBMISSION_ERROR, errorDetails: err });
     }
   };
 
   // To update an existing application PUT /applications/:applicationId
-  updateOne = async (req, res) => {
-    const { applicationId } = req.params;
-    const updateData = req.body;
+  // updateOne = async (req, res) => {
+  //   const { applicationId } = req.params;
+  //   const updateData = req.body;
 
-    try {
-      const application = await this.model.findByPk(applicationId);
+  //   try {
+  //     const application = await this.model.findByPk(applicationId);
 
-      if (!application) {
-        return res
-          .status(404)
-          .json({ success: false, msg: "Application not found" });
-      }
+  //     if (!application) {
+  //       return res
+  //         .status(404)
+  //         .json({ success: false, msg: "Application not found" });
+  //     }
 
-      const updatedApplication = await application.update(updateData);
+  //     const updatedApplication = await application.update(updateData);
 
-      return res.json({ success: true, application: updatedApplication });
-    } catch (err) {
-      return res.status(500).json({ success: false, msg: err.message });
-    }
-  };
+  //     return res.json({ success: true, application: updatedApplication });
+  //   } catch (err) {
+  //     return res.status(500).json({ success: false, msg: err.message });
+  //   }
+  // };
 
   // Delete one application DELETE /applications/delete/:applicationId
-  deleteOne = async (req, res) => {
-    const { applicationId } = req.params;
+  // deleteOne = async (req, res) => {
+  //   const { applicationId } = req.params;
 
-    try {
-      const application = await this.model.findByPk(applicationId);
-      if (!application) {
-        return res
-          .status(404)
-          .json({ success: false, msg: "Application not found" });
-      }
-      await application.destroy();
+  //   try {
+  //     const application = await this.model.findByPk(applicationId);
+  //     if (!application) {
+  //       return res
+  //         .status(404)
+  //         .json({ success: false, msg: "Application not found" });
+  //     }
+  //     await application.destroy();
 
-      return res.json({ success: true, msg: "Application Deleted" });
-    } catch (err) {
-      return res.status(500).json({ success: false, msg: err.message });
-    }
-  };
+  //     return res.json({ success: true, msg: "Application Deleted" });
+  //   } catch (err) {
+  //     return res.status(500).json({ success: false, msg: err.message });
+  //   }
+  // };
 }
 
 module.exports = ContactsController;

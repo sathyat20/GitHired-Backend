@@ -48,7 +48,7 @@ module.exports = {
           key: "id",
         },
       },
-      isBookmarked: {
+      is_bookmarked: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
       },

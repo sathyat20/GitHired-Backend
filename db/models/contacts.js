@@ -27,11 +27,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      company: {
+      companyName: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      position: {
+      jobPosition: {
         type: DataTypes.STRING,
         allowNull: false,
       },

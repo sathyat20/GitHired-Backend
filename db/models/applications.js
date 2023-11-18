@@ -56,7 +56,7 @@ module.exports = (sequelize, DataTypes) => {
           key: "id",
         },
       },
-      is_bookmarked: {
+      isBookmarked: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
       },

@@ -21,7 +21,7 @@ class ApplicationsController extends BaseController {
       companyName,
       location,
       statusId,
-      is_bookmarked,
+      isBookmarked,
       jobDescription,
       applicationDate,
     } = req.body;
@@ -41,7 +41,7 @@ class ApplicationsController extends BaseController {
         companyName,
         location,
         statusId,
-        is_bookmarked,
+        isBookmarked,
         jobDescription,
         applicationDate,
       });

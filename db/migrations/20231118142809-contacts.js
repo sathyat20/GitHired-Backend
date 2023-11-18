@@ -22,11 +22,11 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      company: {
+      company_name: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      position: {
+      job_position: {
         type: Sequelize.STRING,
         allowNull: false,
       },
