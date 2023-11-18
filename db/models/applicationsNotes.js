@@ -3,6 +3,7 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class ApplicationsNotes extends Model {
     static associate(models) {
+      // 1-M Applications - Notes
       ApplicationsNotes.belongsTo(models.application);
     }
   }
