@@ -9,11 +9,13 @@ const PORT = process.env.PORT || 8080;
 const UserRouter = require("./routers/userRouter");
 const ApplicationsRouter = require("./routers/applicationsRouter");
 const AuthRouter = require("./routers/authRouter");
+const ContactsRouter = require("./routers/contactsRouter");
 
 // Import Controllers
 const UserController = require("./controllers/userController");
 const ApplicationsController = require("./controllers/applicationsController");
 const AuthController = require("./controllers/authController");
+const ContactsController = require("./controllers/contactsController");
 
 // import db
 const db = require("./db/models");
@@ -27,11 +29,13 @@ const applicationsController = new ApplicationsController(
   applicationReminder
 );
 const authController = new AuthController(user);
+const contactsController = new ContactsController(user);
 
 // Initializing Routers
 const userRouter = new UserRouter(userController);
 const applicationsRouter = new ApplicationsRouter(applicationsController);
 const authRouter = new AuthRouter(authController);
+const contactsRouter = new ContactsRouter(contactsController);
 
 const app = express();
 const allowedOrigins = [
@@ -59,6 +63,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/users", userRouter.routes());
 app.use("/applications", applicationsRouter.routes());
 app.use("/auth", authRouter.routes());
+app.use("/contacts", contactsRouter.routes());
 
 app.get("/", (req, res) => {
   res.send("Hello, World!");

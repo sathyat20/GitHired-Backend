@@ -6,10 +6,10 @@ module.exports = (sequelize, DataTypes) => {
       // 1-M Users-Contacts
       Contacts.belongsTo(models.user, { foreignKey: "userId" });
       // M-M appplications-contact
-      Contacts.belongsToMany(models.applications, {
+      Contacts.belongsToMany(models.application, {
         through: models.XREFApplicationContact,
       });
-      Contacts.hasmany(models.XREFApplicationContact);
+      Contacts.hasMany(models.XREFApplicationContact);
     }
   }
 

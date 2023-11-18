@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "XREFApplicationsContact",
+      modelName: "XREFApplicationContact",
       timestamps: true,
       underscored: true,
     }
