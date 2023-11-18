@@ -1,16 +1,13 @@
 const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
-  class ApplicationsInterviewPrep extends Model {
-    //create our associations
-
+  class ApplicationsNotes extends Model {
     static associate(models) {
-      //create associations in here
-      ApplicationsInterviewPrep.belongsTo(models.application);
+      ApplicationsNotes.belongsTo(models.application);
     }
   }
 
-  ApplicationsInterviewPrep.init(
+  ApplicationsNotes.init(
     {
       applicationsId: {
         type: DataTypes.INTEGER,
@@ -22,21 +19,20 @@ module.exports = (sequelize, DataTypes) => {
       },
       title: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
       },
       content: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
       },
-      
     },
     {
       sequelize,
-      modelName: "applicationInterviewPrep",
+      modelName: "applicationNotes",
       timestamps: true,
       underscored: true,
-      tableName: "applications_interview_prep",
+      tableName: "applications_notes",
     }
   );
-  return ApplicationsInterviewPrep;
+  return ApplicationsNotes;
 };
