@@ -9,12 +9,14 @@ const PORT = process.env.PORT || 8080;
 const UserRouter = require("./routers/userRouter");
 const ApplicationsRouter = require("./routers/applicationsRouter");
 const AuthRouter = require("./routers/authRouter");
+const QuestionsRouter = require("./routers/questionsRouter");
 const ContactsRouter = require("./routers/contactsRouter");
 
 // Import Controllers
 const UserController = require("./controllers/userController");
 const ApplicationsController = require("./controllers/applicationsController");
 const AuthController = require("./controllers/authController");
+const QuestionsController = require("./controllers/questionsController");
 const ContactsController = require("./controllers/contactsController");
 const NotesController = require("./controllers/notesController");
 
@@ -26,6 +28,12 @@ const {
   contact,
   applicationStatus,
   applicationReminder,
+  question,
+  questionCategory,
+  questionDifficulty,
+  questionLanguage,
+  questionPlatform,
+  questionStatus,
   applicationNote,
   applicationInterview,
 } = db;
@@ -40,6 +48,14 @@ const applicationsController = new ApplicationsController(
   applicationInterview
 );
 const authController = new AuthController(user);
+const questionsController = new QuestionsController(
+  question,
+  questionCategory,
+  questionDifficulty,
+  questionLanguage,
+  questionPlatform,
+  questionStatus
+);
 const contactsController = new ContactsController(contact);
 const notesController = new NotesController(applicationNote);
 
@@ -50,6 +66,7 @@ const applicationsRouter = new ApplicationsRouter(
   notesController
 );
 const authRouter = new AuthRouter(authController);
+const questionsRouter = new QuestionsRouter(questionsController);
 const contactsRouter = new ContactsRouter(contactsController);
 
 const app = express();
@@ -78,6 +95,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/users", userRouter.routes());
 app.use("/applications", applicationsRouter.routes());
 app.use("/auth", authRouter.routes());
+app.use("/questions", questionsRouter.routes());
 app.use("/contacts", contactsRouter.routes());
 
 app.get("/", (req, res) => {
