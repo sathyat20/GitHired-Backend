@@ -8,12 +8,8 @@ class ApplicationsController extends BaseController {
     this.remindersModel = remindersModel;
   }
 
-  test = (req, res) => {
-    return res.send("I am in my Applications Controller");
-  };
-
   // To create a new application POST /applications/create
-  createOne = async (req, res) => {
+  createOneApplication = async (req, res) => {
     const {
       userId,
       jobPosition,
@@ -52,7 +48,7 @@ class ApplicationsController extends BaseController {
   };
 
   // To update an existing application PUT /applications/:applicationId
-  updateOne = async (req, res) => {
+  updateOneApplication = async (req, res) => {
     const { applicationId } = req.params;
     const updateData = req.body;
 
@@ -68,25 +64,6 @@ class ApplicationsController extends BaseController {
       const updatedApplication = await application.update(updateData);
 
       return res.json({ success: true, application: updatedApplication });
-    } catch (err) {
-      return res.status(500).json({ success: false, msg: err.message });
-    }
-  };
-
-  // Delete one application DELETE /applications/delete/:applicationId
-  deleteOne = async (req, res) => {
-    const { applicationId } = req.params;
-
-    try {
-      const application = await this.model.findByPk(applicationId);
-      if (!application) {
-        return res
-          .status(404)
-          .json({ success: false, msg: "Application not found" });
-      }
-      await application.destroy();
-
-      return res.json({ success: true, msg: "Application Deleted" });
     } catch (err) {
       return res.status(500).json({ success: false, msg: err.message });
     }

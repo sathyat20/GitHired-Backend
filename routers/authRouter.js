@@ -8,7 +8,9 @@ class AuthRouter {
 
   routes = () => {
     router.get("/", this.authController.test);
+    // POST - Send magic link to email
     router.post("/login", this.authController.loginUser);
+    // GET - Retrieve user email
     router.get("/retrieve-email", this.authController.retrieveEmailFromToken);
     router.get("/verify", this.authController.verifyUser);
 

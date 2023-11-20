@@ -16,24 +16,39 @@ const UserController = require("./controllers/userController");
 const ApplicationsController = require("./controllers/applicationsController");
 const AuthController = require("./controllers/authController");
 const ContactsController = require("./controllers/contactsController");
+const NotesController = require("./controllers/notesController");
 
 // import db
 const db = require("./db/models");
-const { user, application, applicationStatus, applicationReminder } = db;
+const {
+  user,
+  application,
+  contact,
+  applicationStatus,
+  applicationReminder,
+  applicationNote,
+  applicationInterview,
+} = db;
 
 // Initializing Controllers
 const userController = new UserController(user, application, applicationStatus);
 const applicationsController = new ApplicationsController(
   application,
   applicationStatus,
-  applicationReminder
+  applicationReminder,
+  applicationNote,
+  applicationInterview
 );
 const authController = new AuthController(user);
-const contactsController = new ContactsController(user);
+const contactsController = new ContactsController(contact);
+const notesController = new NotesController(applicationNote);
 
 // Initializing Routers
 const userRouter = new UserRouter(userController);
-const applicationsRouter = new ApplicationsRouter(applicationsController);
+const applicationsRouter = new ApplicationsRouter(
+  applicationsController,
+  notesController
+);
 const authRouter = new AuthRouter(authController);
 const contactsRouter = new ContactsRouter(contactsController);
 

@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
 
   XREFApplicationsContacts.init(
     {
-      contactsId: {
+      contactId: {
         type: DataTypes.STRING,
         allowNull: false,
         references: {
@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
           key: "id",
         },
       },
-      applicationsId: {
+      applicationId: {
         type: DataTypes.STRING,
         allowNull: false,
         references: {

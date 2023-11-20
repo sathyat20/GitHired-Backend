@@ -7,10 +7,6 @@ class UserController extends BaseController {
     this.applicationStatusModel = applicationStatusModel;
   }
 
-  test = (req, res) => {
-    return res.send("I am in my User Controller");
-  };
-
   // Create new user via the route /user/newUser
   createOne = async (req, res) => {
     const { email, firstName, lastName, profilePic } = req.body;
@@ -51,7 +47,9 @@ class UserController extends BaseController {
       });
 
       if (!userWithApplications) {
-        return res.status(404).json({ success: false, msg: "User not found" });
+        return res
+          .status(404)
+          .json({ success: false, msg: "User/Application not found" });
       }
 
       return res.json({

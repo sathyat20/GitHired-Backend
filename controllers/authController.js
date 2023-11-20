@@ -7,11 +7,6 @@ class AuthController extends BaseController {
     super(userModel);
   }
 
-  test = (req, res) => {
-    // Things to do: Connect to db, third party API calls, calculations, etc
-    return res.send("I am in my Auth Controller");
-  };
-
   loginUser = async (req, res) => {
     const user = await this.model.findOne({ where: { email: req.body.email } });
 

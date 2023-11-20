@@ -8,17 +8,20 @@ class UserRouter {
 
   routes = () => {
     router.get("/", this.userController.test);
-    router.get("/base", this.userController.baseMethod);
+    // Routes for user
     router.get("/all", this.userController.getAll);
     router.get(
       "/:userId/applications",
       this.userController.getUserApplications
-    ); // route for getting a user's applications
+    );
+    // GET - Retrieve a single application by a user (Can be moved to application to retrieve one application only - user not needed)
     router.get(
       "/:userId/:applicationId",
       this.userController.getOneUserApplication
-    ); // route for getting a single application for a user
+    );
+    // POST - Create a new user
     router.post("/newUser", this.userController.createOne);
+    // GET - Retrieve a user's applications filtered by status
     router.get(
       "/:userId/applications/status/:statusId",
       this.userController.getApplicationsByStatus

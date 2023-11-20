@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "applicationStatus",
       timestamps: false,
       underscored: true,
-      tableName: "applications_status",
+      tableName: "application_status",
     }
   );
   return ApplicationsStatus;
