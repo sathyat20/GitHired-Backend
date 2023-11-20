@@ -2,17 +2,23 @@ const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
   class Applications extends Model {
-    //create our associations
-
     static associate(models) {
-      //create associations in here
-      Applications.belongsTo(models.user, { foreignKey: "user_id" });
+      // 1-M Users - Applications
+      Applications.belongsTo(models.user, { foreignKey: "userId" });
+      // 1-1 Applications - Status Id
       Applications.belongsTo(models.applicationStatus, {
         foreignKey: "statusId",
       });
+      // 1-M Applications - Reminders, Documents, Interview, Notes
+      Applications.hasMany(models.applicationNotes);
       Applications.hasMany(models.applicationReminder);
       Applications.hasMany(models.applicationDocument);
-      Applications.hasMany(models.applicationInterviewPrep);
+      Applications.hasMany(models.applicationInterview);
+      // M-M appplications-contact
+      Applications.belongsToMany(models.contact, {
+        through: models.XREFApplicationContact,
+      });
+      Applications.hasMany(models.XREFApplicationContact);
     }
   }
 
@@ -50,7 +56,7 @@ module.exports = (sequelize, DataTypes) => {
           key: "id",
         },
       },
-      is_bookmarked: {
+      isBookmarked: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
       },

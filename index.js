@@ -9,11 +9,13 @@ const PORT = process.env.PORT || 8080;
 const UserRouter = require("./routers/userRouter");
 const ApplicationsRouter = require("./routers/applicationsRouter");
 const AuthRouter = require("./routers/authRouter");
+const ContactsRouter = require("./routers/contactsRouter");
 
 // Import Controllers
 const UserController = require("./controllers/userController");
 const ApplicationsController = require("./controllers/applicationsController");
 const AuthController = require("./controllers/authController");
+const ContactsController = require("./controllers/contactsController");
 
 // import db
 const db = require("./db/models");
@@ -26,18 +28,32 @@ const applicationsController = new ApplicationsController(
   applicationStatus,
   applicationReminder
 );
-const authController = new AuthController(user)
+const authController = new AuthController(user);
+const contactsController = new ContactsController(user);
 
 // Initializing Routers
 const userRouter = new UserRouter(userController);
 const applicationsRouter = new ApplicationsRouter(applicationsController);
 const authRouter = new AuthRouter(authController);
+const contactsRouter = new ContactsRouter(contactsController);
 
 const app = express();
+const allowedOrigins = [
+  "https://git-hired-app.netlify.app",
+  "http://localhost:3000", // Add localhost:8080 as an allowed origin
+];
+
 const corsOptions = {
-  origin: "https://git-hired-app.netlify.app",
+  origin: function (origin, callback) {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   optionsSuccessStatus: 200,
 };
+
 app.use(cors(corsOptions));
 
 // Middleware
@@ -46,7 +62,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/users", userRouter.routes());
 app.use("/applications", applicationsRouter.routes());
-app.use("/auth", authRouter.routes())
+app.use("/auth", authRouter.routes());
+app.use("/contacts", contactsRouter.routes());
 
 app.get("/", (req, res) => {
   res.send("Hello, World!");

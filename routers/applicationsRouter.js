@@ -8,8 +8,9 @@ class ApplicationsRouter {
 
   routes = () => {
     router.get("/", this.controller.test);
-    router.post("/newApplication", this.controller.createOne);
-    router.put("/:applicationId", this.controller.updateOne);
+    router.post("/create", this.controller.createOne);
+    router.put("/edit/:applicationId", this.controller.updateOne);
+    router.delete("/delete/:applicationId", this.controller.deleteOne);
     return router;
   };
 }

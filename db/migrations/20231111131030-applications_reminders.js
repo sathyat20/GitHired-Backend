@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     /**
      * Add altering commands here.
      *
@@ -31,11 +31,19 @@ module.exports = {
       reminder_note: {
         type: Sequelize.STRING,
         allowNull: true,
-      }
+      },
+      created_at: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
+      updated_at: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
     });
   },
 
-  async down (queryInterface) {
+  async down(queryInterface) {
     /**
      * Add reverting commands here.
      *
@@ -43,5 +51,5 @@ module.exports = {
      * await queryInterface.dropTable('users');
      */
     await queryInterface.dropTable("applications_reminders");
-  }
+  },
 };

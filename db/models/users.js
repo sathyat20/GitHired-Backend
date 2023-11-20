@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
       //create associations in here
-      Users.hasMany(models.application, { foreignKey: "user_id" });
+      Users.hasMany(models.application, { foreignKey: "userId" });
     }
   }
 
