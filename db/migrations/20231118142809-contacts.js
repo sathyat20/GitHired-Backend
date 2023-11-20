@@ -3,34 +3,48 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    /**
-     * Add altering commands here.
-     *
-     * Example:
-     * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
-     */
-    await queryInterface.createTable("applications_interview", {
+    await queryInterface.createTable("contacts", {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         allowNull: false,
         primaryKey: true,
       },
-      applications_id: {
+      user_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "applications",
+          model: "users",
           key: "id",
         },
       },
-      title: {
+      contact_name: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      content: {
-        type: Sequelize.STRING(1000),
+      company_name: {
+        type: Sequelize.STRING,
         allowNull: false,
+      },
+      job_position: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      email: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      notes: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      phone_number: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      last_contacted_date: {
+        type: Sequelize.DATE,
+        allowNull: true,
       },
       created_at: {
         allowNull: false,
@@ -44,12 +58,6 @@ module.exports = {
   },
 
   async down(queryInterface) {
-    /**
-     * Add reverting commands here.
-     *
-     * Example:
-     * await queryInterface.dropTable('users');
-     */
-    await queryInterface.dropTable("applications_interview");
+    await queryInterface.dropTable("contacts");
   },
 };
