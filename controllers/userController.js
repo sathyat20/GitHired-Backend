@@ -1,10 +1,21 @@
 const BaseController = require("./baseController");
 
 class UserController extends BaseController {
-  constructor(userModel, applicationsModel, applicationStatusModel) {
+  constructor(
+    userModel,
+    applicationsModel,
+    applicationStatusModel,
+    applicationNoteModel,
+    applicationReminderModel,
+    applicationInterviewModel
+  ) {
     super(userModel);
     this.applicationsModel = applicationsModel;
     this.applicationStatusModel = applicationStatusModel;
+    this.applicationNoteModel = applicationNoteModel;
+    this.applicationReminderModel = applicationReminderModel;
+
+    this.applicationInterviewModel = applicationInterviewModel;
   }
 
   // Create new user via the route /user/newUser
@@ -58,6 +69,33 @@ class UserController extends BaseController {
       });
     } catch (err) {
       return res.status(500).json({ success: false, msg: err.message });
+    }
+  };
+
+  getUserNotes = async (req, res) => {
+    const { userId, applicationId } = req.params;
+
+    try {
+      const userApplicationNotes = await this.applicationNoteModel.findAll({
+        where: {
+          applicationId: applicationId,
+        },
+        include: {
+          model: this.applicationsModel,
+          where: {
+            userId: userId,
+          },
+        },
+      });
+
+      return res.json({
+        success: true,
+        data: userApplicationNotes,
+      });
+    } catch (err) {
+      return res
+        .status(500)
+        .json({ success: false, msg: `Failed ${err.message}` });
     }
   };
 

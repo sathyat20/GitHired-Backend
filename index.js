@@ -39,7 +39,14 @@ const {
 } = db;
 
 // Initializing Controllers
-const userController = new UserController(user, application, applicationStatus);
+const userController = new UserController(
+  user,
+  application,
+  applicationStatus,
+  applicationNote,
+  applicationInterview,
+  applicationReminder
+);
 const applicationsController = new ApplicationsController(
   application,
   applicationStatus,

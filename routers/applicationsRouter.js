@@ -10,6 +10,7 @@ class ApplicationsRouter {
   routes = () => {
     // Routes for Applications
     router.get("/", this.applicationsController.test);
+    router.get("/:id", this.applicationsController.getOne);
     router.post("/create", this.applicationsController.createOneApplication);
     router.put(
       "/edit/:applicationId",
