@@ -21,9 +21,8 @@ class ApplicationsRouter {
     // Routes for Notes
     router.get("/notes", this.notesController.test);
     router.get("/notes/:id", this.notesController.getOne);
-    // router.get("/notes/preview", this.controller.getAllNotesPreview);
     // router.post("/notes/create", this.controller.createOneNote);
-    // router.put("/notes/edit/:notesId", this.controller.editOneNote);
+    router.put("/notes/edit/:notesId", this.notesController.editOneNote);
     // router.delete("/notes/delete/:id", this.controller.deleteOne);
 
     // Routes for Interviews

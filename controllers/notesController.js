@@ -6,20 +6,18 @@ class NotesController extends BaseController {
   }
 
   // To update an existing application PUT /applications/:applicationId
-  updateOne = async (req, res) => {
-    const { applicationId } = req.params;
+  editOneNote = async (req, res) => {
+    const { notesId } = req.params;
     const updateData = req.body;
 
     try {
-      const application = await this.model.findByPk(applicationId);
+      const note = await this.model.findByPk(notesId);
 
-      if (!application) {
-        return res
-          .status(404)
-          .json({ success: false, msg: "Application not found" });
+      if (!note) {
+        return res.status(404).json({ success: false, msg: "Note not found" });
       }
 
-      const updatedApplication = await application.update(updateData);
+      const updatedApplication = await note.update(updateData);
 
       return res.json({ success: true, application: updatedApplication });
     } catch (err) {
