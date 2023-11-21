@@ -14,7 +14,11 @@ module.exports = (sequelize, DataTypes) => {
 
   QuestionsLanguages.init(
     {
-      categoryName: {
+      questionsId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      languages: {
         type: DataTypes.STRING,
         allowNull: false,
       },
