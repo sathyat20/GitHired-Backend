@@ -86,6 +86,7 @@ class UserController extends BaseController {
             userId: userId,
           },
         },
+        order: [["updatedAt", "DESC"]], // Sort by updatedAt in descending order
       });
 
       return res.json({

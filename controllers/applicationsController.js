@@ -43,7 +43,9 @@ class ApplicationsController extends BaseController {
       });
       return res.json({ success: true, application: newApplication });
     } catch (err) {
-      return res.status(400).json({ success: false, msg: "This is broken" });
+      return res
+        .status(400)
+        .json({ success: false, msg: "Unable to create application" });
     }
   };
 
