@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
 
   ApplicationsNotes.init(
     {
-      applicationsId: {
+      applicationId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
@@ -29,10 +29,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "applicationNotes",
+      modelName: "applicationNote",
       timestamps: true,
       underscored: true,
-      tableName: "applications_notes",
     }
   );
   return ApplicationsNotes;

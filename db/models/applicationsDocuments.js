@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
 
   ApplicationsDocuments.init(
     {
-      applicationsId: {
+      applicationId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {

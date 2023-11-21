@@ -5,10 +5,11 @@ module.exports = {
   async up(queryInterface) {
     await queryInterface.bulkInsert("users", [
       {
-        email: "foong@rocketacademy.co",
-        first_name: "Foong",
-        last_name: "Leung",
-        profile_pic: "hello",
+        email: "gbrllim@gmail.com",
+        first_name: "Gabriel",
+        last_name: "Lim",
+        profile_pic:
+          "https://firebasestorage.googleapis.com/v0/b/githired-c0060.appspot.com/o/profile-images%2Fdisplayphotos-02.jpg?alt=media&token=cdef5ba9-1a5c-4bb4-bfcd-3db402c4c213",
         application_goal_count: 5,
         questions_goal_count: 10,
         created_at: new Date(),
@@ -18,9 +19,21 @@ module.exports = {
         email: "sam@rocketacademy.co",
         first_name: "Sam",
         last_name: "Shaunessy",
-        profile_pic: "hello",
+        profile_pic:
+          "https://firebasestorage.googleapis.com/v0/b/githired-c0060.appspot.com/o/profile-images%2Flogo.png?alt=media&token=528a1a33-05e4-4930-b597-6b0b8de24cc3",
         application_goal_count: 4,
         questions_goal_count: 2,
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
+        email: "iggy@rocketacademy.co",
+        first_name: "Iggy",
+        last_name: "Mr",
+        profile_pic:
+          "https://firebasestorage.googleapis.com/v0/b/githired-c0060.appspot.com/o/profile-images%2Fmorty.png?alt=media&token=902c7548-dd7e-4a2d-93f9-e5a59fb8b9bc",
+        application_goal_count: 10,
+        questions_goal_count: 5,
         created_at: new Date(),
         updated_at: new Date(),
       },

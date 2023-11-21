@@ -10,17 +10,19 @@ module.exports = {
         allowNull: false,
         primaryKey: true,
       },
-      contacts_id: {
+      contact_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        onDelete: "CASCADE",
         references: {
           model: "contacts",
           key: "id",
         },
       },
-      applications_id: {
+      application_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        onDelete: "CASCADE",
         references: {
           model: "applications",
           key: "id",

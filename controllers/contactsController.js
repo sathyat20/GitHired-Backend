@@ -13,10 +13,6 @@ class ContactsController extends BaseController {
     super(contactModel);
   }
 
-  test = (req, res) => {
-    return res.send("I am in my Contacts Controller");
-  };
-
   // To create a new contact POST /contact/create
   createOne = async (req, res) => {
     const {

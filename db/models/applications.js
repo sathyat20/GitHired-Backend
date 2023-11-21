@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "statusId",
       });
       // 1-M Applications - Reminders, Documents, Interview, Notes
-      Applications.hasMany(models.applicationNotes);
+      Applications.hasMany(models.applicationNote);
       Applications.hasMany(models.applicationReminder);
       Applications.hasMany(models.applicationDocument);
       Applications.hasMany(models.applicationInterview);
