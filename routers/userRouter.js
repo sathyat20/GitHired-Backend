@@ -14,16 +14,17 @@ class UserRouter {
       "/:userId/applications",
       this.userController.getUserApplications
     );
+    // Retrieve all notes from a user
 
     router.get(
       "/:userId/:applicationId/notes",
       this.userController.getUserNotes
     );
-    // GET - Retrieve a single application by a user (Can be moved to application to retrieve one application only - user not needed)
-    // router.get(
-    //   "/:userId/:applicationId",
-    //   this.userController.getOneUserApplication
-    // );
+    // Retrieve all interviews from a user
+    router.get(
+      "/:userId/:applicationId/interviews",
+      this.userController.getUserInterviews
+    );
     // POST - Create a new user
     router.post("/newUser", this.userController.createOne);
     // GET - Retrieve a user's applications filtered by status

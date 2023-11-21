@@ -51,7 +51,6 @@ class BaseController {
 
   deleteOne = async (req, res) => {
     const { id } = req.params;
-    console.log("deleteid", id);
     try {
       const output = await this.model.findByPk(id);
       if (!output) {

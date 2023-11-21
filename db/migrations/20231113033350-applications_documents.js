@@ -13,6 +13,7 @@ module.exports = {
       application_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        onDelete: "CASCADE",
         references: {
           model: "applications",
           key: "id",

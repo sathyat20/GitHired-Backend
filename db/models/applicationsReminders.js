@@ -6,7 +6,9 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
       //create associations in here
-      ApplicationsReminders.belongsTo(models.application);
+      ApplicationsReminders.belongsTo(models.application, {
+        onDelete: "CASCADE",
+      });
     }
   }
 
