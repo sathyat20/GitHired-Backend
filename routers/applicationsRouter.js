@@ -2,9 +2,10 @@ const express = require("express");
 const router = express.Router();
 
 class ApplicationsRouter {
-  constructor(applicationsController, notesController) {
+  constructor(applicationsController, notesController, interviewController) {
     this.applicationsController = applicationsController;
     this.notesController = notesController;
+    this.interviewController = interviewController;
   }
 
   routes = () => {
@@ -12,31 +13,25 @@ class ApplicationsRouter {
     router.get("/", this.applicationsController.test);
     router.get("/:id", this.applicationsController.getOne);
     router.post("/create", this.applicationsController.createOneApplication);
-    router.put(
-      "/edit/:applicationId",
-      this.applicationsController.updateOneApplication
-    );
+    router.put("/edit/:id", this.applicationsController.editOne);
     router.delete("/delete/:id", this.applicationsController.deleteOne);
 
     // Routes for Notes
     router.get("/notes", this.notesController.test);
     router.get("/notes/:id", this.notesController.getOne);
     router.post("/notes/create", this.notesController.createOneNote);
-    router.put("/notes/edit/:notesId", this.notesController.editOneNote);
+    router.put("/notes/edit/:id", this.notesController.editOne);
     router.delete("/notes/delete/:id", this.notesController.deleteOne);
 
     // Routes for Interviews
-    // router.get("/interviews/:interviewsId", this.controller.getOneInterview);
-    // router.get("/interviews/preview", this.controller.getAllInterviewsPreview);
-    // router.post("/interviews/create", this.controller.createOneInterview);
-    // router.put(
-    //   "/interviews/edit/:interviewsId",
-    //   this.controller.editOneInterview
-    // );
-    // router.delete(
-    //   "/interviews/delete/:interviewsId",
-    //   this.controller.deleteOneInterview
-    // );
+    router.get("/interviews", this.interviewController.test);
+    router.get("/interviews/:id", this.interviewController.getOne);
+    router.post(
+      "/interviews/create",
+      this.interviewController.createOneInterview
+    );
+    router.put("/interviews/edit/:id", this.interviewController.editOne);
+    router.delete("/interviews/delete/:id", this.interviewController.deleteOne);
 
     // Routes for Documents
     // router.get("/documents/:documentsId", this.controller.getOneDocument);

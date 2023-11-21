@@ -28,6 +28,27 @@ class BaseController {
     return res.json({ success: true, data: output });
   };
 
+  editOne = async (req, res) => {
+    const { id } = req.params;
+    const updateData = req.body;
+
+    try {
+      const output = await this.model.findByPk(id);
+
+      if (!output) {
+        return res
+          .status(404)
+          .json({ success: false, msg: `${this.model.name} is not found` });
+      }
+
+      const update = await output.update(updateData);
+
+      return res.json({ success: true, update });
+    } catch (err) {
+      return res.status(500).json({ success: false, msg: err.message });
+    }
+  };
+
   deleteOne = async (req, res) => {
     const { id } = req.params;
     console.log("deleteid", id);

@@ -1,11 +1,11 @@
 const BaseController = require("./baseController");
 
-class NotesController extends BaseController {
+class InterviewController extends BaseController {
   constructor(notesModel) {
     super(notesModel);
   }
 
-  createOneNote = async (req, res) => {
+  createOneInterview = async (req, res) => {
     const { applicationId, title, content } = req.body;
     if (!applicationId || !title || !content) {
       return res
@@ -13,18 +13,18 @@ class NotesController extends BaseController {
         .json({ success: false, msg: "Please ensure all inputs are in" });
     }
     try {
-      const newNote = await this.model.create({
+      const newInterview = await this.model.create({
         applicationId,
         title,
         content,
       });
-      return res.json({ success: true, data: newNote });
+      return res.json({ success: true, data: newInterview });
     } catch (err) {
       return res
         .status(400)
-        .json({ success: false, msg: "Unable to create note" });
+        .json({ success: false, msg: "Unable to create interview" });
     }
   };
 }
 
-module.exports = NotesController;
+module.exports = InterviewController;

@@ -19,6 +19,7 @@ const AuthController = require("./controllers/authController");
 const QuestionsController = require("./controllers/questionsController");
 const ContactsController = require("./controllers/contactsController");
 const NotesController = require("./controllers/notesController");
+const InterviewController = require("./controllers/interviewController");
 
 // import db
 const db = require("./db/models");
@@ -65,12 +66,14 @@ const questionsController = new QuestionsController(
 );
 const contactsController = new ContactsController(contact);
 const notesController = new NotesController(applicationNote);
+const interviewController = new InterviewController(applicationInterview);
 
 // Initializing Routers
 const userRouter = new UserRouter(userController);
 const applicationsRouter = new ApplicationsRouter(
   applicationsController,
-  notesController
+  notesController,
+  interviewController
 );
 const authRouter = new AuthRouter(authController);
 const questionsRouter = new QuestionsRouter(questionsController);
