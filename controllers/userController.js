@@ -8,7 +8,8 @@ class UserController extends BaseController {
     applicationStatusModel,
     applicationNoteModel,
     applicationInterviewModel,
-    applicationReminderModel
+    applicationReminderModel,
+    contactsModel
   ) {
     super(userModel);
     this.applicationsModel = applicationsModel;
@@ -16,6 +17,7 @@ class UserController extends BaseController {
     this.applicationNoteModel = applicationNoteModel;
     this.applicationInterviewModel = applicationInterviewModel;
     this.applicationReminderModel = applicationReminderModel;
+    this.contactsModel = contactsModel;
   }
 
   // Create new user via the route /user/newUser
@@ -87,6 +89,31 @@ class UserController extends BaseController {
       return res.json({
         success: true,
         applications: userWithApplications,
+      });
+    } catch (err) {
+      return res.status(500).json({ success: false, msg: err.message });
+    }
+  };
+
+  getUserContacts = async (req, res) => {
+    // Get user data from middleware
+    const user = req.auth;
+
+    try {
+      const userContacts = await this.contactsModel.findAll({
+        where: { userId: user.userId },
+        order: [["updatedAt", "DESC"]], // Sort by updatedAt in descending order
+      });
+
+      if (!userContacts) {
+        return res
+          .status(404)
+          .json({ success: false, msg: "Contacts not found" });
+      }
+
+      return res.json({
+        success: true,
+        contacts: userContacts,
       });
     } catch (err) {
       return res.status(500).json({ success: false, msg: err.message });

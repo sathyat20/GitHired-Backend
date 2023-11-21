@@ -56,46 +56,30 @@ class ContactsController extends BaseController {
     }
   };
 
-  // To update an existing application PUT /applications/:applicationId
-  // updateOne = async (req, res) => {
-  //   const { applicationId } = req.params;
-  //   const updateData = req.body;
+  getUserContacts = async (req, res) => {
+    // Get user data from middleware
+    const user = req.auth;
 
-  //   try {
-  //     const application = await this.model.findByPk(applicationId);
+    try {
+      const userContacts = await this.model.findAll({
+        where: { userId: user.userId },
+        order: [["updatedAt", "DESC"]], // Sort by updatedAt in descending order
+      });
 
-  //     if (!application) {
-  //       return res
-  //         .status(404)
-  //         .json({ success: false, msg: "Application not found" });
-  //     }
+      if (!userContacts) {
+        return res
+          .status(404)
+          .json({ success: false, msg: "Contacts not found" });
+      }
 
-  //     const updatedApplication = await application.update(updateData);
-
-  //     return res.json({ success: true, application: updatedApplication });
-  //   } catch (err) {
-  //     return res.status(500).json({ success: false, msg: err.message });
-  //   }
-  // };
-
-  // Delete one application DELETE /applications/delete/:applicationId
-  // deleteOne = async (req, res) => {
-  //   const { applicationId } = req.params;
-
-  //   try {
-  //     const application = await this.model.findByPk(applicationId);
-  //     if (!application) {
-  //       return res
-  //         .status(404)
-  //         .json({ success: false, msg: "Application not found" });
-  //     }
-  //     await application.destroy();
-
-  //     return res.json({ success: true, msg: "Application Deleted" });
-  //   } catch (err) {
-  //     return res.status(500).json({ success: false, msg: err.message });
-  //   }
-  // };
+      return res.json({
+        success: true,
+        contacts: userContacts,
+      });
+    } catch (err) {
+      return res.status(500).json({ success: false, msg: err.message });
+    }
+  };
 }
 
 module.exports = ContactsController;

@@ -17,8 +17,8 @@ class UserRouter {
       this.verifyToken,
       this.userController.getUserApplications
     );
-    // Retrieve all notes from a user
 
+    // Retrieve all notes from a user
     router.get(
       "/:applicationId/notes",
       this.verifyToken,
@@ -30,6 +30,7 @@ class UserRouter {
       this.verifyToken,
       this.userController.getUserInterviews
     );
+
     router.post("/newUser", this.verifyToken, this.userController.createOne);
 
     return router;
