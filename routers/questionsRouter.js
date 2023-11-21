@@ -9,7 +9,11 @@ class QuestionsRouter {
   routes = () => {
     router.get("/", this.questionsController.test);
     router.get("/base", this.questionsController.baseMethod);
-    
+    router.post("/create", this.questionsController.createOne);
+    router.put("/edit/:questionId", this.questionsController.updateOne);
+    router.post("/newCategory", this.questionsController.createCategory);
+    router.post("/questionInCategory", this.questionsController.createQuestionInCategory)
+
     return router;
   };
 }
