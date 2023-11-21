@@ -2,15 +2,21 @@ const express = require("express");
 const router = express.Router();
 
 class ApplicationsRouter {
-  constructor(applicationsController, notesController, interviewController) {
+  constructor(
+    applicationsController,
+    notesController,
+    interviewController,
+    verifyToken
+  ) {
     this.applicationsController = applicationsController;
     this.notesController = notesController;
     this.interviewController = interviewController;
+    this.verifyToken = verifyToken;
   }
 
   routes = () => {
     // Routes for Applications
-    router.get("/", this.applicationsController.test);
+    router.get("/", this.verifyToken, this.applicationsController.test);
     router.get("/:id", this.applicationsController.getOne);
     router.post("/create", this.applicationsController.createOneApplication);
     router.put("/edit/:id", this.applicationsController.editOne);

@@ -1,5 +1,7 @@
 module.exports = {
   //------------ AUTH MESSAGES ------------//
+  TOKEN_REQUIRED: "No token found, please ensure you are logged in",
+  INVALID_TOKEN: "Token not valid, please log in again",
   // Success messages
   TOKEN_REFRESHED_SUCCESS: "Token refreshed successfully",
   INITIATE_PASSWORD_RESET_SUCCESS:
