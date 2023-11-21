@@ -13,6 +13,8 @@ class QuestionsRouter {
     router.put("/edit/:questionId", this.questionsController.updateOne);
     router.post("/newCategory", this.questionsController.createCategory);
     router.post("/questionInCategory", this.questionsController.createQuestionInCategory)
+    router.get("/getAllQuestions", this.questionsController.getAllCategoriesWithQuestions)
+    router.get("/all", this.questionsController.getAll)
 
     return router;
   };
