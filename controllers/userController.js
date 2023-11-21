@@ -43,11 +43,12 @@ class UserController extends BaseController {
   };
 
   getUserApplications = async (req, res) => {
-    const { userId } = req.params;
+    // Get user data from middleware
+    const user = req.auth;
 
     try {
       const userWithApplications = await this.applicationsModel.findAll({
-        where: { userId: userId },
+        where: { userId: user.userId },
         include: this.applicationStatusModel,
         order: [["updatedAt", "DESC"]], // Sort by updatedAt in descending order
       });
@@ -68,7 +69,8 @@ class UserController extends BaseController {
   };
 
   getUserNotes = async (req, res) => {
-    const { userId, applicationId } = req.params;
+    const user = req.auth;
+    const { applicationId } = req.params;
 
     try {
       const userApplicationNotes = await this.applicationNoteModel.findAll({
@@ -78,7 +80,7 @@ class UserController extends BaseController {
         include: {
           model: this.applicationsModel,
           where: {
-            userId: userId,
+            userId: user.userId,
           },
         },
         order: [["updatedAt", "DESC"]], // Sort by updatedAt in descending order
@@ -96,7 +98,9 @@ class UserController extends BaseController {
   };
 
   getUserInterviews = async (req, res) => {
-    const { userId, applicationId } = req.params;
+    const user = req.auth;
+
+    const { applicationId } = req.params;
     try {
       const userApplicationInterview =
         await this.applicationInterviewModel.findAll({
@@ -106,7 +110,7 @@ class UserController extends BaseController {
           include: {
             model: this.applicationsModel,
             where: {
-              userId: userId,
+              userId: user.userId,
             },
           },
           order: [["updatedAt", "DESC"]], // Sort by updatedAt in descending order

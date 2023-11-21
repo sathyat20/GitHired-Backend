@@ -25,19 +25,40 @@ class ApplicationsRouter {
     // Routes for Notes
     router.get("/notes", this.notesController.test);
     router.get("/notes/:id", this.notesController.getOne);
-    router.post("/notes/create", this.notesController.createOneNote);
-    router.put("/notes/edit/:id", this.notesController.editOne);
-    router.delete("/notes/delete/:id", this.notesController.deleteOne);
+    router.post(
+      "/notes/create",
+      this.verifyToken,
+      this.notesController.createOneNote
+    );
+    router.put(
+      "/notes/edit/:id",
+      this.verifyToken,
+      this.notesController.editOne
+    );
+    router.delete(
+      "/notes/delete/:id",
+      this.verifyToken,
+      this.notesController.deleteOne
+    );
 
     // Routes for Interviews
     router.get("/interviews", this.interviewController.test);
     router.get("/interviews/:id", this.interviewController.getOne);
     router.post(
       "/interviews/create",
+      this.verifyToken,
       this.interviewController.createOneInterview
     );
-    router.put("/interviews/edit/:id", this.interviewController.editOne);
-    router.delete("/interviews/delete/:id", this.interviewController.deleteOne);
+    router.put(
+      "/interviews/edit/:id",
+      this.verifyToken,
+      this.interviewController.editOne
+    );
+    router.delete(
+      "/interviews/delete/:id",
+      this.verifyToken,
+      this.interviewController.deleteOne
+    );
 
     // Routes for Documents
     // router.get("/documents/:documentsId", this.controller.getOneDocument);

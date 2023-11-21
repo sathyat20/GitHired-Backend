@@ -73,7 +73,7 @@ const notesController = new NotesController(applicationNote);
 const interviewController = new InterviewController(applicationInterview);
 
 // Initializing routers
-const userRouter = new UserRouter(userController);
+const userRouter = new UserRouter(userController, verifyToken);
 const applicationsRouter = new ApplicationsRouter(
   applicationsController,
   notesController,
