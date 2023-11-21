@@ -20,11 +20,12 @@ module.exports = {
         status: "Applied",
       },
       {
-        status: "Interview",
-      },
-      {
         status: "Screening",
       },
+      {
+        status: "Interview",
+      },
+
       {
         status: "Offer",
       },

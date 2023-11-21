@@ -5,14 +5,17 @@ require("dotenv").config();
 
 const PORT = process.env.PORT || 8080;
 
-// Import Routers
+// Import middlewares
+const verifyToken = require("./middlewares/verifyToken");
+
+// Import routers
 const UserRouter = require("./routers/userRouter");
 const ApplicationsRouter = require("./routers/applicationsRouter");
 const AuthRouter = require("./routers/authRouter");
 const QuestionsRouter = require("./routers/questionsRouter");
 const ContactsRouter = require("./routers/contactsRouter");
 
-// Import Controllers
+// Import controllers
 const UserController = require("./controllers/userController");
 const ApplicationsController = require("./controllers/applicationsController");
 const AuthController = require("./controllers/authController");
@@ -23,6 +26,7 @@ const InterviewController = require("./controllers/interviewController");
 
 // import db
 const db = require("./db/models");
+// const { verify } = require("crypto");
 const {
   user,
   application,
@@ -68,13 +72,14 @@ const contactsController = new ContactsController(contact);
 const notesController = new NotesController(applicationNote);
 const interviewController = new InterviewController(applicationInterview);
 
-// Initializing Routers
+// Initializing routers
 const userRouter = new UserRouter(userController);
 const applicationsRouter = new ApplicationsRouter(
   applicationsController,
   notesController,
-  interviewController
-);
+  interviewController,
+  verifyToken
+).routes();
 const authRouter = new AuthRouter(authController);
 const questionsRouter = new QuestionsRouter(questionsController);
 const contactsRouter = new ContactsRouter(contactsController);
@@ -103,7 +108,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/users", userRouter.routes());
-app.use("/applications", applicationsRouter.routes());
+app.use("/applications", applicationsRouter);
 app.use("/auth", authRouter.routes());
 app.use("/questions", questionsRouter.routes());
 app.use("/contacts", contactsRouter.routes());

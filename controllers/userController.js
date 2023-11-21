@@ -6,16 +6,15 @@ class UserController extends BaseController {
     applicationsModel,
     applicationStatusModel,
     applicationNoteModel,
-    applicationReminderModel,
-    applicationInterviewModel
+    applicationInterviewModel,
+    applicationReminderModel
   ) {
     super(userModel);
     this.applicationsModel = applicationsModel;
     this.applicationStatusModel = applicationStatusModel;
     this.applicationNoteModel = applicationNoteModel;
-    this.applicationReminderModel = applicationReminderModel;
-
     this.applicationInterviewModel = applicationInterviewModel;
+    this.applicationReminderModel = applicationReminderModel;
   }
 
   // Create new user via the route /user/newUser
@@ -96,46 +95,34 @@ class UserController extends BaseController {
     }
   };
 
-  getOneUserApplication = async (req, res) => {
+  getUserInterviews = async (req, res) => {
     const { userId, applicationId } = req.params;
-
     try {
-      // Find all applications data matching userId
-      const userWithApplications = await this.model.findOne({
-        where: { id: userId },
-        include: [
-          {
-            model: this.applicationsModel,
-            include: this.applicationStatusModel,
+      const userApplicationInterview =
+        await this.applicationInterviewModel.findAll({
+          where: {
+            applicationId: applicationId,
           },
-        ],
-      });
-
-      if (!userWithApplications) {
-        return res.status(404).json({ success: false, msg: "User not found" });
-      }
-
-      const applicationIdToFind = parseInt(applicationId);
-
-      // Filter the required application id
-      const foundApplication = userWithApplications.applications.find(
-        (app) => app.id === applicationIdToFind
-      );
-
-      if (!foundApplication) {
-        return res
-          .status(404)
-          .json({ success: false, msg: "Application not found" });
-      }
+          include: {
+            model: this.applicationsModel,
+            where: {
+              userId: userId,
+            },
+          },
+          order: [["updatedAt", "DESC"]], // Sort by updatedAt in descending order
+        });
 
       return res.json({
         success: true,
-        application: foundApplication,
+        data: userApplicationInterview,
       });
     } catch (err) {
-      return res.status(500).json({ success: false, msg: err.message });
+      return res
+        .status(500)
+        .json({ success: false, msg: `Failed ${err.message}` });
     }
   };
+
   // To retrieve job applications for each user based on status_id
 
   getApplicationsByStatus = async (req, res) => {

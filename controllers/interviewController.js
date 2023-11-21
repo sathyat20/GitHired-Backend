@@ -1,8 +1,8 @@
 const BaseController = require("./baseController");
 
 class InterviewController extends BaseController {
-  constructor(notesModel) {
-    super(notesModel);
+  constructor(interviewModel) {
+    super(interviewModel);
   }
 
   createOneInterview = async (req, res) => {
