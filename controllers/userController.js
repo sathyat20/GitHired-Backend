@@ -1,4 +1,5 @@
 const BaseController = require("./baseController");
+const jwt = require("jsonwebtoken");
 
 class UserController extends BaseController {
   constructor(
@@ -35,10 +36,34 @@ class UserController extends BaseController {
         lastName,
         profilePic,
       });
+      const token = jwt.sign(
+        { userId: newUser.id, email: newUser.email }, // Add userId and email to JWT body
+        process.env.JWT_SECRET,
+        {
+          expiresIn: "24h",
+        }
+      );
 
-      return res.json({ success: true, user: newUser });
+      return res.json({ success: true, newUser, token });
     } catch (err) {
       return res.status(400).json({ success: false, msg: err });
+    }
+  };
+
+  getOneUser = async (req, res) => {
+    const user = req.auth;
+    try {
+      const userData = await this.model.findByPk(user.userId);
+
+      if (!userData) {
+        return res.status(404).json({ success: false, msg: "User not found" });
+      }
+      return res.json({
+        success: true,
+        userData,
+      });
+    } catch (err) {
+      return res.status(500).json({ success: false, msg: err.message });
     }
   };
 

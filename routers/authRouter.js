@@ -2,8 +2,9 @@ const express = require("express");
 const router = express.Router();
 
 class AuthRouter {
-  constructor(authController) {
+  constructor(authController, verifyToken) {
     this.authController = authController;
+    this.verifyToken = verifyToken;
   }
 
   routes = () => {
@@ -12,7 +13,7 @@ class AuthRouter {
     router.post("/login", this.authController.loginUser);
     // GET - Retrieve user email
     router.get("/retrieve-email", this.authController.retrieveEmailFromToken);
-    router.get("/verify", this.authController.verifyUser);
+    router.get("/verify", this.verifyToken, this.authController.verifyUser);
 
     return router;
   };

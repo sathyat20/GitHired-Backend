@@ -16,13 +16,13 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        email: "sam@rocketacademy.co",
-        first_name: "Sam",
-        last_name: "Shaunessy",
+        email: "sathya@unisoft.sg",
+        first_name: "Sathya",
+        last_name: "T",
         profile_pic:
           "https://firebasestorage.googleapis.com/v0/b/githired-c0060.appspot.com/o/profile-images%2Flogo.png?alt=media&token=528a1a33-05e4-4930-b597-6b0b8de24cc3",
-        application_goal_count: 4,
-        questions_goal_count: 2,
+        application_goal_count: 14,
+        questions_goal_count: 20,
         created_at: new Date(),
         updated_at: new Date(),
       },

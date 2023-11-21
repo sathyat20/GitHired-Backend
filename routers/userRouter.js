@@ -9,7 +9,8 @@ class UserRouter {
 
   routes = () => {
     router.get("/", this.userController.test);
-    router.get("/all", this.userController.getAll);
+    router.get("/data", this.verifyToken, this.userController.getOneUser);
+
     // Retrieve all applications from a user
     router.get(
       "/applications",
@@ -29,14 +30,7 @@ class UserRouter {
       this.verifyToken,
       this.userController.getUserInterviews
     );
-    // POST - Create a new user
-    router.post("/newUser", this.userController.createOne);
-    // GET - Retrieve a user's applications filtered by status
-    router.get(
-      "/:userId/applications/status/:statusId",
-      this.userController.getApplicationsByStatus
-    );
-    router.get("/:id", this.userController.getOne);
+    router.post("/newUser", this.verifyToken, this.userController.createOne);
 
     return router;
   };

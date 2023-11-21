@@ -80,9 +80,9 @@ const applicationsRouter = new ApplicationsRouter(
   interviewController,
   verifyToken
 ).routes();
-const authRouter = new AuthRouter(authController);
+const authRouter = new AuthRouter(authController, verifyToken);
 const questionsRouter = new QuestionsRouter(questionsController);
-const contactsRouter = new ContactsRouter(contactsController);
+const contactsRouter = new ContactsRouter(contactsController, verifyToken);
 
 const app = express();
 const allowedOrigins = [

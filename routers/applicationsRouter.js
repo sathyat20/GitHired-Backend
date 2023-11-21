@@ -17,14 +17,24 @@ class ApplicationsRouter {
   routes = () => {
     // Routes for Applications
     router.get("/", this.verifyToken, this.applicationsController.test);
-    router.get("/:id", this.applicationsController.getOne);
-    router.post("/create", this.applicationsController.createOneApplication);
-    router.put("/edit/:id", this.applicationsController.editOne);
-    router.delete("/delete/:id", this.applicationsController.deleteOne);
+    router.get("/:id", this.verifyToken, this.applicationsController.getOne);
+    router.post(
+      "/create",
+      this.verifyToken,
+      this.applicationsController.createOneApplication
+    );
+    router.put(
+      "/edit/:id",
+      this.verifyToken,
+      this.applicationsController.editOne
+    );
+    router.delete(
+      "/delete/:id",
+      this.verifyToken,
+      this.applicationsController.deleteOne
+    );
 
     // Routes for Notes
-    router.get("/notes", this.notesController.test);
-    router.get("/notes/:id", this.notesController.getOne);
     router.post(
       "/notes/create",
       this.verifyToken,
@@ -42,8 +52,6 @@ class ApplicationsRouter {
     );
 
     // Routes for Interviews
-    router.get("/interviews", this.interviewController.test);
-    router.get("/interviews/:id", this.interviewController.getOne);
     router.post(
       "/interviews/create",
       this.verifyToken,
@@ -61,14 +69,7 @@ class ApplicationsRouter {
     );
 
     // Routes for Documents
-    // router.get("/documents/:documentsId", this.controller.getOneDocument);
-    // router.get("/documents", this.controller.getAllDocuments);
-    // router.post("/documents/create", this.controller.createOneDocument);
-    // router.put("/documents/edit/:documentsId", this.controller.editOneDocument);
-    // router.delete(
-    //   "/documents/delete/:documentsId",
-    //   this.controller.deleteOneDocument
-    // );
+
     return router;
   };
 }
