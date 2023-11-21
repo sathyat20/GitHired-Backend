@@ -6,13 +6,13 @@ module.exports = (sequelize, DataTypes) => {
 
     static associate(models) {
       //create associations in here
-      ApplicationsReminders.belongsTo(models.application)
+      ApplicationsReminders.belongsTo(models.application);
     }
   }
 
   ApplicationsReminders.init(
     {
-      applicationsId: {
+      applicationId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {

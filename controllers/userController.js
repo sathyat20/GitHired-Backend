@@ -1,15 +1,22 @@
 const BaseController = require("./baseController");
 
 class UserController extends BaseController {
-  constructor(userModel, applicationsModel, applicationStatusModel) {
+  constructor(
+    userModel,
+    applicationsModel,
+    applicationStatusModel,
+    applicationNoteModel,
+    applicationReminderModel,
+    applicationInterviewModel
+  ) {
     super(userModel);
     this.applicationsModel = applicationsModel;
     this.applicationStatusModel = applicationStatusModel;
-  }
+    this.applicationNoteModel = applicationNoteModel;
+    this.applicationReminderModel = applicationReminderModel;
 
-  test = (req, res) => {
-    return res.send("I am in my User Controller");
-  };
+    this.applicationInterviewModel = applicationInterviewModel;
+  }
 
   // Create new user via the route /user/newUser
   createOne = async (req, res) => {
@@ -40,26 +47,52 @@ class UserController extends BaseController {
     const { userId } = req.params;
 
     try {
-      const userWithApplications = await this.model.findOne({
-        where: { id: userId },
-        include: [
-          {
-            model: this.applicationsModel,
-            include: this.applicationStatusModel,
-          },
-        ],
+      const userWithApplications = await this.applicationsModel.findAll({
+        where: { userId: userId },
+        include: this.applicationStatusModel,
+        order: [["updatedAt", "DESC"]], // Sort by updatedAt in descending order
       });
 
       if (!userWithApplications) {
-        return res.status(404).json({ success: false, msg: "User not found" });
+        return res
+          .status(404)
+          .json({ success: false, msg: "User/Application not found" });
       }
 
       return res.json({
         success: true,
-        applications: userWithApplications.applications,
+        applications: userWithApplications,
       });
     } catch (err) {
       return res.status(500).json({ success: false, msg: err.message });
+    }
+  };
+
+  getUserNotes = async (req, res) => {
+    const { userId, applicationId } = req.params;
+
+    try {
+      const userApplicationNotes = await this.applicationNoteModel.findAll({
+        where: {
+          applicationId: applicationId,
+        },
+        include: {
+          model: this.applicationsModel,
+          where: {
+            userId: userId,
+          },
+        },
+        order: [["updatedAt", "DESC"]], // Sort by updatedAt in descending order
+      });
+
+      return res.json({
+        success: true,
+        data: userApplicationNotes,
+      });
+    } catch (err) {
+      return res
+        .status(500)
+        .json({ success: false, msg: `Failed ${err.message}` });
     }
   };
 

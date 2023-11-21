@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
 
   ApplicationsInterview.init(
     {
-      applicationsId: {
+      applicationId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
@@ -34,7 +34,6 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "applicationInterview",
       timestamps: true,
       underscored: true,
-      tableName: "applications_interview",
     }
   );
   return ApplicationsInterview;

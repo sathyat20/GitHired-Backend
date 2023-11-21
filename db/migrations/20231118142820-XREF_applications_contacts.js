@@ -10,7 +10,7 @@ module.exports = {
         allowNull: false,
         primaryKey: true,
       },
-      contacts_id: {
+      contact_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -18,7 +18,7 @@ module.exports = {
           key: "id",
         },
       },
-      applications_id: {
+      application_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
