@@ -47,14 +47,10 @@ class UserController extends BaseController {
     const { userId } = req.params;
 
     try {
-      const userWithApplications = await this.model.findOne({
-        where: { id: userId },
-        include: [
-          {
-            model: this.applicationsModel,
-            include: this.applicationStatusModel,
-          },
-        ],
+      const userWithApplications = await this.applicationsModel.findAll({
+        where: { userId: userId },
+        include: this.applicationStatusModel,
+        order: [["updatedAt", "DESC"]], // Sort by updatedAt in descending order
       });
 
       if (!userWithApplications) {
@@ -65,7 +61,7 @@ class UserController extends BaseController {
 
       return res.json({
         success: true,
-        applications: userWithApplications.applications,
+        applications: userWithApplications,
       });
     } catch (err) {
       return res.status(500).json({ success: false, msg: err.message });

@@ -8,8 +8,8 @@ class UserRouter {
 
   routes = () => {
     router.get("/", this.userController.test);
-    // Routes for user
     router.get("/all", this.userController.getAll);
+    // Retrieve all applications from a user
     router.get(
       "/:userId/applications",
       this.userController.getUserApplications
