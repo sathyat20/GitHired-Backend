@@ -95,31 +95,6 @@ class UserController extends BaseController {
     }
   };
 
-  getUserContacts = async (req, res) => {
-    // Get user data from middleware
-    const user = req.auth;
-
-    try {
-      const userContacts = await this.contactsModel.findAll({
-        where: { userId: user.userId },
-        order: [["updatedAt", "DESC"]], // Sort by updatedAt in descending order
-      });
-
-      if (!userContacts) {
-        return res
-          .status(404)
-          .json({ success: false, msg: "Contacts not found" });
-      }
-
-      return res.json({
-        success: true,
-        contacts: userContacts,
-      });
-    } catch (err) {
-      return res.status(500).json({ success: false, msg: err.message });
-    }
-  };
-
   getUserNotes = async (req, res) => {
     const user = req.auth;
     const { applicationId } = req.params;
