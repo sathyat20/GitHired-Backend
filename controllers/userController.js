@@ -54,6 +54,27 @@ class UserController extends BaseController {
     }
   };
 
+  editOneUser = async (req, res) => {
+    const user = req.auth;
+    const updateData = req.body;
+
+    try {
+      const output = await this.model.findByPk(user.userId);
+
+      if (!output) {
+        return res
+          .status(404)
+          .json({ success: false, msg: `${this.model.name} is not found` });
+      }
+
+      const update = await output.update(updateData);
+
+      return res.json({ success: true, update });
+    } catch (err) {
+      return res.status(500).json({ success: false, msg: err.message });
+    }
+  };
+
   getOneUser = async (req, res) => {
     const user = req.auth;
     try {

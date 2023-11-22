@@ -40,6 +40,18 @@ module.exports = {
         created_at: new Date(),
         updated_at: new Date(),
       },
+      {
+        contact_id: 6,
+        application_id: 4,
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
+      {
+        contact_id: 7,
+        application_id: 5,
+        created_at: new Date(),
+        updated_at: new Date(),
+      },
     ]);
   },
 
