@@ -15,6 +15,7 @@ class QuestionsRouter {
     router.post("/questionInCategory", this.questionsController.createQuestionInCategory)
     router.get("/getAllQuestions", this.questionsController.getAllCategoriesWithQuestions)
     router.get("/all", this.questionsController.getAll)
+    router.get("/:id", this.questionsController.getOne);
 
     return router;
   };
