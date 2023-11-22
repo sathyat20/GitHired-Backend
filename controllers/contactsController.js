@@ -9,14 +9,15 @@ const {
 } = require("../constants/messages");
 
 class ContactsController extends BaseController {
-  constructor(contactModel) {
+  constructor(contactModel, applicationContactsModel, applicationsModel) {
     super(contactModel);
+    this.applicationContactsModel = applicationContactsModel;
+    this.applicationsModel = applicationsModel;
   }
 
   // To create a new contact POST /contact/create
   createOne = async (req, res) => {
     const {
-      userId,
       contactName,
       companyName,
       jobPosition,
@@ -24,18 +25,16 @@ class ContactsController extends BaseController {
       notes,
       phoneNumber,
       lastContactedDate,
+      applicationId,
     } = req.body;
     //input validation
 
-    if (!userId || !contactName || !companyName || !jobPosition) {
-      return res
-        .status(BAD_REQUEST)
-        .json({ success: false, msg: MISSING_FIELDS });
-    }
+    const user = req.auth;
+
     try {
       console.log("body:", req.body);
       const newContact = await this.model.create({
-        userId,
+        userId: user.userId,
         contactName,
         companyName,
         jobPosition,
@@ -44,10 +43,15 @@ class ContactsController extends BaseController {
         phoneNumber,
         lastContactedDate,
       });
+
+      const output = await this.applicationsModel.findByPk(applicationId);
+      const response = await output.addContact(newContact.id);
+
       return res.status(CREATED).json({
         success: true,
         msg: CONTACT_CREATED_SUCCESS,
         data: newContact,
+        response,
       });
     } catch (err) {
       return res

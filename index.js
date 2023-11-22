@@ -41,6 +41,7 @@ const {
   questionStatus,
   applicationNote,
   applicationInterview,
+  applicationContacts,
 } = db;
 
 // Initializing Controllers
@@ -69,7 +70,11 @@ const questionsController = new QuestionsController(
   questionPlatform,
   questionStatus
 );
-const contactsController = new ContactsController(contact);
+const contactsController = new ContactsController(
+  contact,
+  applicationContacts,
+  application
+);
 const notesController = new NotesController(applicationNote);
 const interviewController = new InterviewController(applicationInterview);
 

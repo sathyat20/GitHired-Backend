@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("XREF_applications_contacts", {
+    await queryInterface.createTable("application_contacts", {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -28,10 +28,18 @@ module.exports = {
           key: "id",
         },
       },
+      created_at: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
+      updated_at: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
     });
   },
 
   async down(queryInterface) {
-    await queryInterface.dropTable("XREF_applications_contacts");
+    await queryInterface.dropTable("application_contacts");
   },
 };

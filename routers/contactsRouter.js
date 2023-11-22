@@ -14,9 +14,17 @@ class ContactsRouter {
       this.verifyToken,
       this.contractsController.getUserContacts
     );
-    router.post("/create", this.contractsController.createOne);
-    // router.put("/edit/:applicationId", this.controller.updateOne);
-    router.delete("/delete/:id", this.contractsController.deleteOne); // Issue with XREF table
+    router.post(
+      "/create",
+      this.verifyToken,
+      this.contractsController.createOne
+    );
+    router.put("/edit/:id", this.verifyToken, this.contractsController.editOne);
+    router.delete(
+      "/delete/:id",
+      this.verifyToken,
+      this.contractsController.deleteOne
+    );
     return router;
   };
 }

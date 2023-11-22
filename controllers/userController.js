@@ -154,6 +154,39 @@ class UserController extends BaseController {
     }
   };
 
+  getUserContacts = async (req, res) => {
+    const user = req.auth;
+
+    const { applicationId } = req.params;
+    try {
+      const userApplicationContacts = await this.contactsModel.findAll({
+        include: [
+          {
+            model: this.applicationsModel,
+            where: {
+              id: applicationId, // Filter by the specific applicationId
+              userId: user.userId, // Filter by the specific userId in applications
+            },
+            through: {
+              attributes: [], // To exclude through table attributes from the result
+            },
+          },
+        ],
+
+        order: [["updatedAt", "DESC"]], // Sort by updatedAt in descending order
+      });
+
+      return res.json({
+        success: true,
+        contacts: userApplicationContacts,
+      });
+    } catch (err) {
+      return res
+        .status(500)
+        .json({ success: false, msg: `Failed ${err.message}` });
+    }
+  };
+
   // To retrieve job applications for each user based on status_id
 
   getApplicationsByStatus = async (req, res) => {
