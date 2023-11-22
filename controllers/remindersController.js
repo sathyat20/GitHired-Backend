@@ -1,4 +1,5 @@
 const BaseController = require("./baseController");
+const { Op } = require("sequelize");
 
 class RemindersController extends BaseController {
   constructor(reminderModel) {
@@ -6,8 +7,15 @@ class RemindersController extends BaseController {
   }
 
   getAllReminders = async (req, res) => {
+    const currentDate = new Date(); // Get current date/time
+
     const output = await this.model.findAll({
-      order: [["reminderDate", "DESC"]], // Sort by updatedAt in descending order
+      where: {
+        reminderDate: {
+          [Op.gte]: currentDate, // Filter for dates greater than or equal to the current date
+        },
+      },
+      order: [["reminderDate", "ASC"]],
     });
 
     return res.json({ success: true, data: output });
