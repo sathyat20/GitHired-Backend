@@ -8,9 +8,11 @@ class UserController extends BaseController {
     applicationStatusModel,
     applicationNoteModel,
     applicationInterviewModel,
-    applicationReminderModel
+    applicationReminderModel,
+    questionModel
   ) {
     super(userModel);
+    this.questionModel = questionModel;
     this.applicationsModel = applicationsModel;
     this.applicationStatusModel = applicationStatusModel;
     this.applicationNoteModel = applicationNoteModel;
@@ -119,6 +121,30 @@ class UserController extends BaseController {
       return res
         .status(500)
         .json({ success: false, msg: `Failed ${err.message}` });
+    }
+  };
+
+  getUserQuestions = async (req, res) => {
+    // Get user data from middleware
+    const user = req.auth;
+
+    try {
+      const userWithQuestions = await this.questionModel.findAll({
+        where: { userId: user.userId },
+      });
+
+      if (!userWithQuestions) {
+        return res
+          .status(404)
+          .json({ success: false, msg: "User/Questions not found" });
+      }
+
+      return res.json({
+        success: true,
+        questions: userWithQuestions,
+      });
+    } catch (err) {
+      return res.status(500).json({ success: false, msg: err.message });
     }
   };
 

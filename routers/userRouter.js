@@ -17,8 +17,15 @@ class UserRouter {
       this.verifyToken,
       this.userController.getUserApplications
     );
-    // Retrieve all notes from a user
 
+    // Retrieve all questions from a user
+    router.get(
+      "/questions",
+      this.verifyToken,
+      this.userController.getUserQuestions
+    );
+
+    // Retrieve all notes from a user
     router.get(
       "/:applicationId/notes",
       this.verifyToken,
