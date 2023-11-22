@@ -41,6 +41,7 @@ const {
   questionStatus,
   applicationNote,
   applicationInterview,
+  applicationContacts,
 } = db;
 
 // Initializing Controllers
@@ -51,7 +52,8 @@ const userController = new UserController(
   applicationNote,
   applicationInterview,
   applicationReminder,
-  question
+  question,
+  contact
 );
 const applicationsController = new ApplicationsController(
   application,
@@ -69,7 +71,11 @@ const questionsController = new QuestionsController(
   questionPlatform,
   questionStatus
 );
-const contactsController = new ContactsController(contact);
+const contactsController = new ContactsController(
+  contact,
+  applicationContacts,
+  application
+);
 const notesController = new NotesController(applicationNote);
 const interviewController = new InterviewController(applicationInterview);
 
@@ -82,7 +88,7 @@ const applicationsRouter = new ApplicationsRouter(
   verifyToken
 ).routes();
 const authRouter = new AuthRouter(authController, verifyToken);
-const questionsRouter = new QuestionsRouter(questionsController);
+const questionsRouter = new QuestionsRouter(questionsController, verifyToken);
 const contactsRouter = new ContactsRouter(contactsController, verifyToken);
 
 const app = express();

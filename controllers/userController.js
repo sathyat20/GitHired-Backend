@@ -9,7 +9,8 @@ class UserController extends BaseController {
     applicationNoteModel,
     applicationInterviewModel,
     applicationReminderModel,
-    questionModel
+    questionModel,
+    contactsModel
   ) {
     super(userModel);
     this.questionModel = questionModel;
@@ -18,6 +19,7 @@ class UserController extends BaseController {
     this.applicationNoteModel = applicationNoteModel;
     this.applicationInterviewModel = applicationInterviewModel;
     this.applicationReminderModel = applicationReminderModel;
+    this.contactsModel = contactsModel;
   }
 
   // Create new user via the route /user/newUser
@@ -170,6 +172,39 @@ class UserController extends BaseController {
       return res.json({
         success: true,
         data: userApplicationInterview,
+      });
+    } catch (err) {
+      return res
+        .status(500)
+        .json({ success: false, msg: `Failed ${err.message}` });
+    }
+  };
+
+  getUserContacts = async (req, res) => {
+    const user = req.auth;
+
+    const { applicationId } = req.params;
+    try {
+      const userApplicationContacts = await this.contactsModel.findAll({
+        include: [
+          {
+            model: this.applicationsModel,
+            where: {
+              id: applicationId, // Filter by the specific applicationId
+              userId: user.userId, // Filter by the specific userId in applications
+            },
+            through: {
+              attributes: [], // To exclude through table attributes from the result
+            },
+          },
+        ],
+
+        order: [["updatedAt", "DESC"]], // Sort by updatedAt in descending order
+      });
+
+      return res.json({
+        success: true,
+        contacts: userApplicationContacts,
       });
     } catch (err) {
       return res
