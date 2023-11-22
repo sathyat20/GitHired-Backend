@@ -112,7 +112,7 @@ class QuestionsController extends BaseController {
     try {
       const categories = await this.questionCategoryModel.findAll({});
       const questions = await this.model.findAll({
-        where: { userId: 1 },
+        where: {userId: 2},
         include: this.questionCategoryModel,
       });
       return res.json({ success: true, data: questions, categories });

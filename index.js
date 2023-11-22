@@ -52,6 +52,7 @@ const userController = new UserController(
   applicationNote,
   applicationInterview,
   applicationReminder,
+  question,
   contact
 );
 const applicationsController = new ApplicationsController(

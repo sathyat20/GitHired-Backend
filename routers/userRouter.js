@@ -18,6 +18,12 @@ class UserRouter {
       this.userController.getUserApplications
     );
 
+    // Retrieve all questions from a user
+    router.get(
+      "/questions",
+      this.verifyToken,
+      this.userController.getUserQuestions)
+      
     // Retrieve all contacts from a user
     router.get(
       "/:applicationId/contacts",
