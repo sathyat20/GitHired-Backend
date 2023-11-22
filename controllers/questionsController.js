@@ -119,12 +119,10 @@ class QuestionsController extends BaseController {
 
     try {
       // Find or create the category
-      const [category] = await this.questionCategoryModel.findOrCreate(
-        {
-          where: { categoryName: categoryName },
-          defaults: { categoryName: categoryName },
-        }
-      );
+      const [category] = await this.questionCategoryModel.findOrCreate({
+        where: { categoryName: categoryName },
+        defaults: { categoryName: categoryName },
+      });
 
       // Now create the question with the categoryId
       const newQuestion = await this.model.create({
@@ -135,6 +133,22 @@ class QuestionsController extends BaseController {
       return res.json({ success: true, question: newQuestion });
     } catch (err) {
       return res.status(400).json({ success: false, msg: err.message });
+    }
+  };
+
+  getAllCategoriesWithQuestions = async (req, res) => {
+    // const {userId} = req.params
+    try {
+      const categories = await this.questionCategoryModel.findAll({
+
+      })
+      const questions = await this.model.findAll({
+        where: {userId: 1},
+        include: this.questionCategoryModel,
+      });
+      return res.json({ success: true, data: questions, categories });
+    } catch (err) {
+      return res.status(500).json({ success: false, msg: err.message });
     }
   };
 }
