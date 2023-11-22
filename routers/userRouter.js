@@ -2,37 +2,35 @@ const express = require("express");
 const router = express.Router();
 
 class UserRouter {
-  constructor(userController) {
+  constructor(userController, verifyToken) {
     this.userController = userController;
+    this.verifyToken = verifyToken;
   }
 
   routes = () => {
     router.get("/", this.userController.test);
-    router.get("/all", this.userController.getAll);
+    router.get("/data", this.verifyToken, this.userController.getOneUser);
+
     // Retrieve all applications from a user
     router.get(
-      "/:userId/applications",
+      "/applications",
+      this.verifyToken,
       this.userController.getUserApplications
     );
     // Retrieve all notes from a user
 
     router.get(
-      "/:userId/:applicationId/notes",
+      "/:applicationId/notes",
+      this.verifyToken,
       this.userController.getUserNotes
     );
     // Retrieve all interviews from a user
     router.get(
-      "/:userId/:applicationId/interviews",
+      "/:applicationId/interviews",
+      this.verifyToken,
       this.userController.getUserInterviews
     );
-    // POST - Create a new user
-    router.post("/newUser", this.userController.createOne);
-    // GET - Retrieve a user's applications filtered by status
-    router.get(
-      "/:userId/applications/status/:statusId",
-      this.userController.getApplicationsByStatus
-    );
-    router.get("/:id", this.userController.getOne);
+    router.post("/newUser", this.verifyToken, this.userController.createOne);
 
     return router;
   };

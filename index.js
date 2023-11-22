@@ -73,16 +73,16 @@ const notesController = new NotesController(applicationNote);
 const interviewController = new InterviewController(applicationInterview);
 
 // Initializing routers
-const userRouter = new UserRouter(userController);
+const userRouter = new UserRouter(userController, verifyToken);
 const applicationsRouter = new ApplicationsRouter(
   applicationsController,
   notesController,
   interviewController,
   verifyToken
 ).routes();
-const authRouter = new AuthRouter(authController);
+const authRouter = new AuthRouter(authController, verifyToken);
 const questionsRouter = new QuestionsRouter(questionsController);
-const contactsRouter = new ContactsRouter(contactsController);
+const contactsRouter = new ContactsRouter(contactsController, verifyToken);
 
 const app = express();
 const allowedOrigins = [

@@ -19,7 +19,7 @@ const verifyToken = (req, res, next) => {
   try {
     const decodedToken = jwt.verify(token, JWT_SECRET);
     console.log("Decoded Token:", decodedToken);
-    req.user = decodedToken; // Send decoded token data as body
+    req.auth = decodedToken; // Send decoded token data as auth
     next();
   } catch (err) {
     return res.status(FORBIDDEN).json({ success: false, msg: INVALID_TOKEN });
