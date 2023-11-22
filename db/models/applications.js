@@ -16,9 +16,9 @@ module.exports = (sequelize, DataTypes) => {
       Applications.hasMany(models.applicationInterview);
       // M-M appplications-contact
       Applications.belongsToMany(models.contact, {
-        through: models.XREFApplicationContact,
+        through: models.ApplicationContact,
       });
-      Applications.hasMany(models.XREFApplicationContact);
+      Applications.hasMany(models.ApplicationContact);
     }
   }
 

@@ -1,14 +1,14 @@
 const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
-  class XREFApplicationsContacts extends Model {
+  class ApplicationsContacts extends Model {
     static associate(models) {
-      XREFApplicationsContacts.belongsTo(models.application);
-      XREFApplicationsContacts.belongsTo(models.contact);
+      ApplicationsContacts.belongsTo(models.application);
+      ApplicationsContacts.belongsTo(models.contact);
     }
   }
 
-  XREFApplicationsContacts.init(
+  ApplicationsContacts.init(
     {
       contactId: {
         type: DataTypes.STRING,
@@ -29,10 +29,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "XREFApplicationContact",
+      modelName: "ApplicationContact",
       timestamps: true,
       underscored: true,
     }
   );
-  return XREFApplicationsContacts;
+  return ApplicationsContacts;
 };

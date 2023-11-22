@@ -20,15 +20,15 @@ module.exports = {
       },
       contact_name: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       company_name: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       job_position: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       email: {
         type: Sequelize.STRING,

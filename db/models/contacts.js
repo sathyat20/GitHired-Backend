@@ -7,16 +7,16 @@ module.exports = (sequelize, DataTypes) => {
       Contacts.belongsTo(models.user, { foreignKey: "userId" });
       // M-M appplications-contact
       Contacts.belongsToMany(models.application, {
-        through: models.XREFApplicationContact,
+        through: models.ApplicationContact,
       });
-      Contacts.hasMany(models.XREFApplicationContact);
+      Contacts.hasMany(models.ApplicationContact);
     }
   }
 
   Contacts.init(
     {
       userId: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
         references: {
           model: "user",
@@ -25,15 +25,15 @@ module.exports = (sequelize, DataTypes) => {
       },
       contactName: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       companyName: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       jobPosition: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       email: {
         type: DataTypes.STRING,

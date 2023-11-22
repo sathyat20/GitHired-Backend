@@ -2,19 +2,39 @@ const express = require("express");
 const router = express.Router();
 
 class QuestionsRouter {
-  constructor(questionsController) {
+  constructor(questionsController, verifyToken) {
     this.questionsController = questionsController;
+    this.verifyToken = verifyToken;
   }
 
   routes = () => {
     router.get("/", this.questionsController.test);
-    router.get("/base", this.questionsController.baseMethod);
-    router.post("/create", this.questionsController.createOne);
-    router.put("/edit/:questionId", this.questionsController.updateOne);
-    router.post("/newCategory", this.questionsController.createCategory);
-    router.post("/questionInCategory", this.questionsController.createQuestionInCategory)
-    router.get("/getAllQuestions", this.questionsController.getAllCategoriesWithQuestions)
-    router.get("/all", this.questionsController.getAll)
+    router.get(
+      "/categories",
+      this.verifyToken,
+      this.questionsController.getCategories
+    );
+    router.post(
+      "/create",
+      this.verifyToken,
+      this.questionsController.createOne
+    );
+    router.put(
+      "/edit/:questionId",
+      this.verifyToken,
+      this.questionsController.updateOne
+    );
+    router.post(
+      "/newCategory",
+      this.verifyToken,
+      this.questionsController.createCategory
+    );
+    router.get(
+      "/getAllQuestions",
+      this.verifyToken,
+      this.questionsController.getAllCategoriesWithQuestions
+    );
+    router.get("/:id", this.verifyToken, this.questionsController.getOne);
 
     return router;
   };
