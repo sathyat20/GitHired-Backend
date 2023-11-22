@@ -201,6 +201,36 @@ class UserController extends BaseController {
     }
   };
 
+  getUserReminders = async (req, res) => {
+    const user = req.auth;
+
+    const { applicationId } = req.params;
+    try {
+      const userApplicationReminders =
+        await this.applicationReminderModel.findAll({
+          where: {
+            applicationId: applicationId,
+          },
+          include: {
+            model: this.applicationsModel,
+            where: {
+              userId: user.userId,
+            },
+          },
+          order: [["updatedAt", "DESC"]], // Sort by updatedAt in descending order
+        });
+
+      return res.json({
+        success: true,
+        data: userApplicationReminders,
+      });
+    } catch (err) {
+      return res
+        .status(500)
+        .json({ success: false, msg: `Failed ${err.message}` });
+    }
+  };
+
   getUserContacts = async (req, res) => {
     const user = req.auth;
 

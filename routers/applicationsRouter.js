@@ -6,9 +6,11 @@ class ApplicationsRouter {
     applicationsController,
     notesController,
     interviewController,
+    remindersController,
     verifyToken
   ) {
     this.applicationsController = applicationsController;
+    this.remindersController = remindersController;
     this.notesController = notesController;
     this.interviewController = interviewController;
     this.verifyToken = verifyToken;
@@ -68,7 +70,28 @@ class ApplicationsRouter {
       this.interviewController.deleteOne
     );
 
-    // Routes for Documents
+    // Routes for Reminders
+
+    router.get(
+      "/reminders/getAll",
+      this.verifyToken,
+      this.remindersController.getAllReminders
+    );
+    router.post(
+      "/reminders/create",
+      this.verifyToken,
+      this.remindersController.createOneReminder
+    );
+    router.put(
+      "/reminders/edit/:id",
+      this.verifyToken,
+      this.remindersController.editOne
+    );
+    router.delete(
+      "/reminders/delete/:id",
+      this.verifyToken,
+      this.remindersController.deleteOne
+    );
 
     return router;
   };
