@@ -82,7 +82,7 @@ const applicationsRouter = new ApplicationsRouter(
   verifyToken
 ).routes();
 const authRouter = new AuthRouter(authController, verifyToken);
-const questionsRouter = new QuestionsRouter(questionsController);
+const questionsRouter = new QuestionsRouter(questionsController, verifyToken);
 const contactsRouter = new ContactsRouter(contactsController, verifyToken);
 
 const app = express();
