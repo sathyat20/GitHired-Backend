@@ -10,8 +10,9 @@ class ApplicationsController extends BaseController {
 
   // To create a new application POST /applications/create
   createOneApplication = async (req, res) => {
+    const user = req.auth; // Pull user id from middleware
+
     const {
-      userId,
       jobPosition,
       color,
       companyName,
@@ -23,7 +24,7 @@ class ApplicationsController extends BaseController {
     } = req.body;
     //input validation
 
-    if (!userId || !statusId || !jobPosition) {
+    if (!statusId || !jobPosition) {
       return res
         .status(400)
         .json({ success: false, msg: "Please ensure all inputs are in" });
@@ -31,7 +32,7 @@ class ApplicationsController extends BaseController {
     try {
       console.log("body:", req.body);
       const newApplication = await this.model.create({
-        userId,
+        userId: user.userId,
         jobPosition,
         color,
         companyName,
