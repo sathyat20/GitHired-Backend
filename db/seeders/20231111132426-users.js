@@ -9,7 +9,7 @@ module.exports = {
         first_name: "Gabriel",
         last_name: "Lim",
         profile_pic:
-          "https://firebasestorage.googleapis.com/v0/b/githired-c0060.appspot.com/o/profile-images%2Fdisplayphotos-02.jpg?alt=media&token=cdef5ba9-1a5c-4bb4-bfcd-3db402c4c213",
+          "https://firebasestorage.googleapis.com/v0/b/githired-c0060.appspot.com/o/profile-images%2Fdisplayphotos-01.jpg?alt=media&token=aca70dc5-3623-4186-9408-97d2836801f7",
         application_goal_count: 5,
         questions_goal_count: 10,
         created_at: new Date(),

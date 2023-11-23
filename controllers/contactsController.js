@@ -4,7 +4,6 @@ const { CREATED, BAD_REQUEST } = require("../constants/statusCodes");
 
 const {
   CONTACT_CREATED_SUCCESS,
-  MISSING_FIELDS,
   SUBMISSION_ERROR,
 } = require("../constants/messages");
 

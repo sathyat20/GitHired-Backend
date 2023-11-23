@@ -10,7 +10,10 @@ class NotesController extends BaseController {
     if (!applicationId || !title || !content) {
       return res
         .status(400)
-        .json({ success: false, msg: "Please ensure all inputs are in" });
+        .json({
+          success: false,
+          msg: "Notes - Please ensure all inputs are in",
+        });
     }
     try {
       const newNote = await this.model.create({
