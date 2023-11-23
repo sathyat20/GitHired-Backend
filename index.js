@@ -23,6 +23,7 @@ const QuestionsController = require("./controllers/questionsController");
 const ContactsController = require("./controllers/contactsController");
 const NotesController = require("./controllers/notesController");
 const InterviewController = require("./controllers/interviewController");
+const RemindersController = require("./controllers/remindersController");
 
 // import db
 const db = require("./db/models");
@@ -78,6 +79,7 @@ const contactsController = new ContactsController(
 );
 const notesController = new NotesController(applicationNote);
 const interviewController = new InterviewController(applicationInterview);
+const remindersController = new RemindersController(applicationReminder);
 
 // Initializing routers
 const userRouter = new UserRouter(userController, verifyToken);
@@ -85,6 +87,7 @@ const applicationsRouter = new ApplicationsRouter(
   applicationsController,
   notesController,
   interviewController,
+  remindersController,
   verifyToken
 ).routes();
 const authRouter = new AuthRouter(authController, verifyToken);

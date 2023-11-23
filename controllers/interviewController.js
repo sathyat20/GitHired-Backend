@@ -10,7 +10,10 @@ class InterviewController extends BaseController {
     if (!applicationId || !title || !content) {
       return res
         .status(400)
-        .json({ success: false, msg: "Please ensure all inputs are in" });
+        .json({
+          success: false,
+          msg: "Interview - Please ensure all inputs are in",
+        });
     }
     try {
       const newInterview = await this.model.create({

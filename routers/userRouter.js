@@ -22,8 +22,9 @@ class UserRouter {
     router.get(
       "/questions",
       this.verifyToken,
-      this.userController.getUserQuestions)
-      
+      this.userController.getUserQuestions
+    );
+
     // Retrieve all contacts from a user
     router.get(
       "/:applicationId/contacts",
@@ -44,7 +45,15 @@ class UserRouter {
       this.userController.getUserInterviews
     );
 
+    // Retrieve all reminders from a user
+    router.get(
+      "/:applicationId/reminders",
+      this.verifyToken,
+      this.userController.getUserReminders
+    );
+
     router.post("/newUser", this.verifyToken, this.userController.createOne);
+    router.put("/edit", this.verifyToken, this.userController.editOneUser);
 
     return router;
   };

@@ -54,6 +54,27 @@ class UserController extends BaseController {
     }
   };
 
+  editOneUser = async (req, res) => {
+    const user = req.auth;
+    const updateData = req.body;
+
+    try {
+      const output = await this.model.findByPk(user.userId);
+
+      if (!output) {
+        return res
+          .status(404)
+          .json({ success: false, msg: `${this.model.name} is not found` });
+      }
+
+      const update = await output.update(updateData);
+
+      return res.json({ success: true, update });
+    } catch (err) {
+      return res.status(500).json({ success: false, msg: err.message });
+    }
+  };
+
   getOneUser = async (req, res) => {
     const user = req.auth;
     try {
@@ -172,6 +193,36 @@ class UserController extends BaseController {
       return res.json({
         success: true,
         data: userApplicationInterview,
+      });
+    } catch (err) {
+      return res
+        .status(500)
+        .json({ success: false, msg: `Failed ${err.message}` });
+    }
+  };
+
+  getUserReminders = async (req, res) => {
+    const user = req.auth;
+
+    const { applicationId } = req.params;
+    try {
+      const userApplicationReminders =
+        await this.applicationReminderModel.findAll({
+          where: {
+            applicationId: applicationId,
+          },
+          include: {
+            model: this.applicationsModel,
+            where: {
+              userId: user.userId,
+            },
+          },
+          order: [["updatedAt", "DESC"]], // Sort by updatedAt in descending order
+        });
+
+      return res.json({
+        success: true,
+        data: userApplicationReminders,
       });
     } catch (err) {
       return res
