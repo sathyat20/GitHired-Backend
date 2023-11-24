@@ -44,7 +44,7 @@ class ContactsController extends BaseController {
       });
 
       const output = await this.applicationsModel.findByPk(applicationId);
-      const response = await output.addContact(newContact.id);
+      const response = await output.addContact(newContact.id); // Add contactId and applicationId to through table: "application_contacts"
 
       return res.status(CREATED).json({
         success: true,

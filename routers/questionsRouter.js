@@ -19,11 +19,7 @@ class QuestionsRouter {
       this.verifyToken,
       this.questionsController.createOne
     );
-    router.put(
-      "/edit/:questionId",
-      this.verifyToken,
-      this.questionsController.updateOne
-    );
+    router.put("/edit/:id", this.verifyToken, this.questionsController.editOne);
     router.post(
       "/newCategory",
       this.verifyToken,
