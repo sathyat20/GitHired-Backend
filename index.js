@@ -25,9 +25,8 @@ const NotesController = require("./controllers/notesController");
 const InterviewController = require("./controllers/interviewController");
 const RemindersController = require("./controllers/remindersController");
 
-// import db
+// Import db
 const db = require("./db/models");
-// const { verify } = require("crypto");
 const {
   user,
   application,
@@ -45,7 +44,7 @@ const {
   applicationContacts,
 } = db;
 
-// Initializing Controllers
+// Initializing controllers
 const userController = new UserController(
   user,
   application,
@@ -95,9 +94,11 @@ const questionsRouter = new QuestionsRouter(questionsController, verifyToken);
 const contactsRouter = new ContactsRouter(contactsController, verifyToken);
 
 const app = express();
+
+// Cors options setup
 const allowedOrigins = [
   "https://git-hired-app.netlify.app",
-  "http://localhost:3000", // Add localhost:8080 as an allowed origin
+  "http://localhost:3000", // Add localhost:3000 as an allowed origin
 ];
 
 const corsOptions = {
@@ -110,10 +111,8 @@ const corsOptions = {
   },
   optionsSuccessStatus: 200,
 };
-
+// Initializing middleware
 app.use(cors(corsOptions));
-
-// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -123,10 +122,6 @@ app.use("/auth", authRouter.routes());
 app.use("/questions", questionsRouter.routes());
 app.use("/contacts", contactsRouter.routes());
 
-app.get("/", (req, res) => {
-  res.send("Hello, World!");
-});
-
 app.listen(PORT, () => {
-  console.log(`Express app listening on port ${PORT}!`);
+  console.log(`GitHired app listening on port ${PORT}!`);
 });

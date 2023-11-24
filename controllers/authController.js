@@ -52,27 +52,10 @@ class AuthController extends BaseController {
     if (token == null) return res.sendStatus(401).send("No token submitted");
     try {
       const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-      console.log("Decoded token is:", decodedToken);
       const email = decodedToken.email;
       res.send(email);
     } catch (e) {
       return res.status(400).json({ success: false, msg: "Invalid Token" });
-    }
-  };
-
-  verifyUser = async (req, res) => {
-    const token = req.query.token;
-    if (token == null) return res.sendStatus(401).send("No token submitted");
-    try {
-      const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-      console.log("Decoded token is:", decodedToken);
-      const user = await this.model.findOne({
-        where: { email: decodedToken.email },
-      });
-      res.send(user);
-    } catch (e) {
-      console.error(e);
-      return res.status(401).send(e.message);
     }
   };
 }

@@ -17,10 +17,6 @@ class QuestionsController extends BaseController {
     this.questionStatusModel = questionStatusModel;
   }
 
-  test = (req, res) => {
-    return res.send("I am in my Questions Controller");
-  };
-
   // To create a new question
   createOne = async (req, res) => {
     const user = req.auth;
@@ -63,28 +59,6 @@ class QuestionsController extends BaseController {
       return res.json({ success: true, question: newQuestion });
     } catch (err) {
       return res.status(400).json({ success: false, msg: err });
-    }
-  };
-
-  // To update an existing question
-  updateOne = async (req, res) => {
-    const { questionId } = req.params;
-    const updateData = req.body;
-
-    try {
-      const question = await this.model.findByPk(questionId);
-
-      if (!question) {
-        return res
-          .status(404)
-          .json({ success: false, msg: "Question not found" });
-      }
-
-      const updatedQuestion = await question.update(updateData);
-
-      return res.json({ success: true, question: updatedQuestion });
-    } catch (err) {
-      return res.status(500).json({ success: false, msg: err.message });
     }
   };
 

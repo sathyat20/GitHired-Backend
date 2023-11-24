@@ -13,8 +13,6 @@ class AuthRouter {
     router.post("/login", this.authController.loginUser);
     // GET - Retrieve user email
     router.get("/retrieve-email", this.authController.retrieveEmailFromToken);
-    router.get("/verify", this.verifyToken, this.authController.verifyUser);
-
     return router;
   };
 }

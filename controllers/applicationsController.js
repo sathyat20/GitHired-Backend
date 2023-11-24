@@ -22,15 +22,14 @@ class ApplicationsController extends BaseController {
       jobDescription,
       applicationDate,
     } = req.body;
-    //input validation
 
+    //input validation
     if (!statusId || !jobPosition) {
       return res
         .status(400)
         .json({ success: false, msg: "Please ensure all inputs are in" });
     }
     try {
-      console.log("body:", req.body);
       const newApplication = await this.model.create({
         userId: user.userId,
         jobPosition,

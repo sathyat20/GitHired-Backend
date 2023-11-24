@@ -13,7 +13,6 @@ class BaseController {
 
   getAll = async (req, res) => {
     const output = await this.model.findAll();
-
     return res.json({ success: true, data: output });
   };
 
