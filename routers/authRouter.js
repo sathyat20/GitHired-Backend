@@ -2,9 +2,8 @@ const express = require("express");
 const router = express.Router();
 
 class AuthRouter {
-  constructor(authController, verifyToken) {
+  constructor(authController) {
     this.authController = authController;
-    this.verifyToken = verifyToken;
   }
 
   routes = () => {
