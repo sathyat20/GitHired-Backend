@@ -8,7 +8,9 @@ class BaseController {
   };
 
   test = (req, res) => {
-    return res.send(`This is my ${this.model.name} controller`);
+    return res.send(
+      `This is my awesome deployed ${this.model.name} controller`
+    );
   };
 
   getAll = async (req, res) => {

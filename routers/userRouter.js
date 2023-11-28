@@ -8,7 +8,7 @@ class UserRouter {
   }
 
   routes = () => {
-    router.get("/", this.verifyToken, this.userController.test);
+    router.get("/", this.userController.test);
     router.get("/data", this.verifyToken, this.userController.getOneUser);
 
     // Retrieve all applications from a user
